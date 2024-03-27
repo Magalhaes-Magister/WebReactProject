@@ -1,11 +1,11 @@
 .header {
   background-color: rgb(239, 188, 155);
-  display: flex;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
+  box-sizing: border-box;
   width: 100%;
-  z-index: 999; /* Isso garante que o header fique sempre acima de outros elementos */
+  display: flex;
+  justify-content: space-between; /* Add this line */
+  padding: 1em;
+  margin-bottom: 2em;
 }
 body {
   margin-top: 100px;
@@ -17,13 +17,12 @@ body {
 
 #titulo {
   padding-left: 30px;
-
 }
 
-
-#menu{
+#menu {
   display: flex;
   justify-content: space-between;
   padding-right: 30px;
   padding-left: 30px;
 }
+

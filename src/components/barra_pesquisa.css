@@ -1,0 +1,8 @@
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
+

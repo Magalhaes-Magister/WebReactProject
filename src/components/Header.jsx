@@ -4,7 +4,7 @@ import logo from '../imagens/book_logo.png';
 import shoppingCar from '../imagens/car_logo.png';
 
 function Header() {
-  const cartCount = 15; // Substitua pelo número real de livros no carrinho
+  const cartCount = 15; 
 
   return (
     <header className="header">

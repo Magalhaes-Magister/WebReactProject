@@ -5,6 +5,8 @@
     background-color: rgb(33, 95, 154);
     display: flex;
     justify-content: space-between;
+    padding: 1em;
+    margin-top: 2em;
 }
 
 #titulo{
