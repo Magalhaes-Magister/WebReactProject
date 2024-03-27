@@ -4,6 +4,7 @@ import star_2 from '../imagens/2_stars.png'
 import star_3 from '../imagens/3_stars.png'
 import star_4 from '../imagens/4_stars.png'
 import star_5 from '../imagens/5_stars.png'
+import basket from '../imagens/basket.png'
 export default function CaixaLivro({livro}){
 
     let titulo = livro.title;
@@ -34,10 +35,21 @@ export default function CaixaLivro({livro}){
                 <img src={thumbnail} width={155}/>
                 <div className="info">
                     <strong>{titulo}</strong>
-                    <p>{autores}</p>
+                    <ul>
+                        {autores.map(autor =>{
+                            return(
+                                <li>
+                                    {autor}
+                                </li>
+                            )
+                        })}
+                    </ul>
                     <img className={"rating"} src={estrelas} width={150}/>
                 </div>
-                <button>Comprar</button>
+                <button>
+                    <img src={basket} width={25}/>
+                    Comprar
+                </button>
             </div>
         </>
     )
