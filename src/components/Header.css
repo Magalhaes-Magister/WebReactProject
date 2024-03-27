@@ -7,6 +7,9 @@
   width: 100%;
   z-index: 999; /* Isso garante que o header fique sempre acima de outros elementos */
 }
+body {
+  margin-top: 100px;
+}
 
 #logo {
   display: flex;
