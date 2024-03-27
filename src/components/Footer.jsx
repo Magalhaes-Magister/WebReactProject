@@ -1,9 +1,17 @@
 import React from 'react';
+import './Footer.css'; 
+import logo from '../imagens/book_logo.png';
 
 function Footer() {
   return (
-    <footer>
-      <p>Este é o meu rodapé de</p>
+    <footer className='footer'>
+      <div id="logo">
+          <img src={logo} alt="BookStore" style={{ width: '100px', height: 'auto', background: 'none' }} />
+          <div id="titulo">
+          <h1 style={{ color: 'black' }}>BookStore</h1>
+            <p id="segundo">© 2024, BookStore Inc. All rights reserved</p>
+          </div>
+        </div>
     </footer>
   );
 }
