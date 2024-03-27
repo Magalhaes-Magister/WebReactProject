@@ -1,0 +1,32 @@
+.PaginaInicial {
+  /* estilos para a classe PaginaInicial */
+  background-color: #f0f0f0;
+}
+
+.header {
+  padding: 20px;
+  background-color: rgb(147, 96, 37);
+  display: flex; /* Torna os elementos filhos flexíveis */
+  justify-content: space-between; /* Distribui os elementos ao longo do contêiner com espaço entre eles */
+}
+
+
+.header > * {
+  /* Estilos para os elementos filhos da classe header */
+  margin-right: 125px; /* Espaçamento entre os elementos */
+}
+
+#logo {
+  /* estilos para o id logo */
+  width: 10px;
+}
+
+#filter {
+  /* estilos para o id filter */
+  margin: 30px 0;
+}
+
+#menu {
+  /* estilos para o id menu */
+  list-style-type: none;
+}
