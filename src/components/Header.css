@@ -6,6 +6,7 @@
   top: 0;
   width: 100%;
   z-index: 999; /* Isso garante que o header fique sempre acima de outros elementos */
+  height: 100px; /* Defina a altura desejada para o header */
 }
 
 #logo {
@@ -14,13 +15,16 @@
 
 #titulo {
   padding-left: 30px;
-
 }
 
-
-#menu{
+#menu {
   display: flex;
   justify-content: space-between;
   padding-right: 30px;
   padding-left: 30px;
+}
+
+/* Adicione o seguinte código para ocupar o espaço restante do website */
+body {
+  margin-top: 100px; /* Defina a mesma altura do header para manter o conteúdo abaixo dele */
 }
