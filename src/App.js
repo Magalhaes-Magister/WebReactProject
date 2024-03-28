@@ -6,6 +6,8 @@ import House from './components/House.jsx';
 import CaixaLivro from "./components/caixaLivro";
 import Books from "./db.json";
 import Pesquisa from './components/barra_pesquisa.jsx';
+import Barra_numero from './components/barra_numeros.jsx';
+import Filtro from './components/Filtro.jsx';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <CaixaLivro
             livro={Books.books[0]}
         />
+      <Barra_numero />
+      <Filtro />
       <House />
       <Footer /> 
     </div>

@@ -1,0 +1,64 @@
+.botao_filtro {
+    display: inline-block;
+    position: relative;
+    background-color: white;
+    color: black;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.botao_filtro ul {
+    display: none;
+    position: absolute;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.botao_filtro ul li {
+    margin: 0;
+    padding: 10px;
+}
+
+.botao_filtro ul li a {
+    text-decoration: none; 
+}
+
+.botao_filtro:hover {
+    background-color: #f5f5f5;
+}
+
+.botao_filtro:hover ul {
+    display: block;
+}
+
+.Zero {
+    display: none;
+}
+
+
+.Primeiro:hover ul{
+    display: block;
+}
+
+
+.Segundo:hover ul{
+    display: block;
+}
+
+
+#Primeiro_1 {
+    display: none;
+}
+
+#Segundo_2 {
+    display: none;
+}
+

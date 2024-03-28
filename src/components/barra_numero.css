@@ -1,0 +1,33 @@
+
+  
+#barra{
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+}
+  
+.barra_numero li {
+    background-color: white;
+    display: inline-block; 
+    margin-right: 10px; 
+    font-size: 16px; 
+    color: #333; 
+    cursor: pointer; 
+    border: 1px solid #333; 
+    padding: 5px; 
+}
+  
+#numeros_iniciais:hover {
+    color: white;
+    background-color: rgb(33, 95, 154);
+  }
+
+  #numero_final:hover {
+    color: white;
+    background-color: rgb(33, 95, 154);
+  }
+  
+#next {
+    color: white;
+    background-color: rgb(33, 95, 154);
+}
