@@ -12,11 +12,24 @@ import Filtro from './components/Filtro.jsx';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Pesquisa />
-        <CaixaCaixaLivro/>
-    </div>
+    <>
+      <div className="App">
+        <Header />
+        <div className="Pesquisa">
+          <Pesquisa style="" />
+        </div>
+        <div className="Filtro">
+        <Filtro />
+      </div>
+        <div className="CaixaCaixaLivro"></div>
+        <CaixaCaixaLivro />
+      </div>
+      <div className="Barra_numero">
+        <Barra_numero />
+      </div>
+      <House />
+      <Footer />
+    </>
   );
 }
 
