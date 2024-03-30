@@ -71,6 +71,7 @@ function BarraNumero() {
         <li id="numero_final">{totalPages}</li>
         <li id="next" onClick={handleNextPage}>Next</li>
       </ul>
+
     </div>
   );
 }
