@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './barra_numero.css';
 import db from '../db.json';
+import CaixaCaixaLivro from './caixaCaixaLivro';
 
 function BarraNumero() {
   const totalBooks = db.books.length;
@@ -28,42 +29,45 @@ function BarraNumero() {
     }
   };
 
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <li
-          key={i}
-          className={`numeros_iniciais ${clickedNumber === i ? 'active' : ''}`}
-          onClick={() => handleClick(i)}
-        >
-          {i}
-        </li>
-      );
-    }
-
-    let startIndex;
-    let endIndex;
+  const calculateStartEndIndexes = () => {
+    let start;
+    let end;
     if (clickedNumber >= 2 && clickedNumber <= totalPages - 4) {
-      startIndex = clickedNumber - 1;
-      endIndex = clickedNumber + 3;
+      start = clickedNumber - 1;
+      end = clickedNumber + 3;
     } else if (clickedNumber > totalPages - 4) {
-      startIndex = totalPages - 4;
-      endIndex = totalPages;
+      start = totalPages - 4;
+      end = totalPages;
     } else {
-      startIndex = 1;
-      endIndex = 5;
+      start = 1;
+      end = 5;
     }
-
-    return pageNumbers.slice(startIndex - 1, endIndex);
+    return { start, end };
   };
+
+  const calculateStartEndLivro = () => {
+    const start_livro = (currentPage - 1) * booksPerPage + 1;
+    const end_livro = currentPage * booksPerPage;
+    return { start_livro, end_livro };
+  }
+
+  const { start, end } = calculateStartEndIndexes();
+  const {start_livro, end_livro} = calculateStartEndLivro();
 
   return (
     <div className="barra_numero">
+      <CaixaCaixaLivro start={start_livro} end={end_livro} />
       <ul id="barra">
         <li id="next" onClick={handleFirstPage}>First</li>
-        {renderPageNumbers()}
-        <li>...</li>
+        {Array.from({ length: Math.ceil(totalPages) }, (_, index) => (
+          <li
+            className={`numeros_iniciais ${clickedNumber === index + 1 ? 'active' : ''}`}
+            key={index + 1}
+            onClick={() => handleClick(index + 1)}
+          >
+            {index + 1}
+          </li>
+        )).slice(start - 1, end)}
         <li id="numero_final">{totalPages}</li>
         <li id="next" onClick={handleNextPage}>Next</li>
       </ul>

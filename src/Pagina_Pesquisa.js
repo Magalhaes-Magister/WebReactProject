@@ -19,8 +19,7 @@ function Pagina_Principal() {
         <div className="Filtro">
         <Filtro />
       </div>
-        <div className="CaixaCaixaLivro"></div>
-        <CaixaCaixaLivro />
+      
       </div>
       <div className="Barra_numero">
         <Barra_numero />
