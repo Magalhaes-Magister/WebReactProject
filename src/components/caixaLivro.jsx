@@ -1,10 +1,10 @@
 import './style_caixaLivro.css'
-import star_1 from '../imagens/1_stars.png'
-import star_2 from '../imagens/2_stars.png'
-import star_3 from '../imagens/3_stars.png'
-import star_4 from '../imagens/4_stars.png'
-import star_5 from '../imagens/5_stars.png'
-import basket from '../imagens/basket.png'
+import star_1 from '../images/1_stars.png'
+import star_2 from '../images/2_stars.png'
+import star_3 from '../images/3_stars.png'
+import star_4 from '../images/4_stars.png'
+import star_5 from '../images/5_stars.png'
+import basket from '../images/basket.png'
 export default function CaixaLivro({livro}){
 
     let titulo = livro.title;
