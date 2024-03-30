@@ -1,4 +1,4 @@
-import LivroCarrinho from "../components/livroCarrinho";
+import LivroCarrinho from "./livroCarrinho";
 import React from 'react'
 
 export default function Carrinho() {

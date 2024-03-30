@@ -1,4 +1,4 @@
-import Books from '../db.json'
+import Books from '../../db.json'
 import './livroCarrinho_style.css'
 import {useState} from 'react'
 

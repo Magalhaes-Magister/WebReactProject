@@ -1,12 +1,12 @@
 import React from 'react';
 import './Pagina_Pesquisa.css';
-import Header from '../components/Header.jsx';
-import Footer from '../components/Footer.jsx';
-import House from '../components/House.jsx';
-import CaixaCaixaLivro from "../components/caixaCaixaLivro.jsx";
-import Pesquisa from '../components/barra_pesquisa.jsx';
-import Barra_numero from '../components/barra_numeros.jsx';
-import Filtro from '../components/Filtro.jsx';
+import Header from '../../components/Header.jsx';
+import Footer from '../../components/Footer.jsx';
+import House from '../../components/House.jsx';
+import CaixaCaixaLivro from "../../components/caixaCaixaLivro.jsx";
+import Pesquisa from '../../components/barra_pesquisa.jsx';
+import Barra_numero from './barra_numeros.jsx';
+import Filtro from './Filtro.jsx';
 
 function Pagina_Principal() {
   return (
