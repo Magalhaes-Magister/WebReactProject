@@ -2,6 +2,7 @@ import React from 'react';
 import './Header.css'; 
 import logo from '../imagens/book_logo.png';
 import shoppingCar from '../imagens/car_logo.png';
+import Carrinho_compra from './carrinho_compra';
 
 function Header() {
   const cartCount = 15; 
@@ -15,9 +16,12 @@ function Header() {
           </div>
         </div>
         <div id="menu">
-          <ul>
-            <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
+          <ul id="shopping_cart">
+            <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} /> 
             <span className="cart-count" style={{ borderRadius: '50%', backgroundColor: 'black', color: 'rgb(239, 188, 155)', padding: '8px' }}>{cartCount}</span>
+            <div className="cart-hover">
+              <Carrinho_compra />
+            </div>
           </ul>
         </div>
     </header>
