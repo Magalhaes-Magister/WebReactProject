@@ -16,9 +16,6 @@ function Pagina_Principal() {
         <div className="Pesquisa">
           <Pesquisa style="" />
         </div>
-        <div className="Filtro">
-        <Filtro />
-      </div>
       
       </div>
       <div className="Barra_numero">
