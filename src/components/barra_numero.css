@@ -1,11 +1,10 @@
-
-  
-#barra{
-    list-style-type: none; 
-    margin: 0;
-    padding: 0;
+#barra {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
-  
+
 .barra_numero li {
     background-color: white;
     display: inline-block; 

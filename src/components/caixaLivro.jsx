@@ -8,7 +8,7 @@ import basket from '../images/basket.png'
 export default function CaixaLivro({livro}){
 
     let titulo = livro.title;
-    let autores = livro.authors;
+    let autores = livro.authors 
     let thumbnail = livro.thumbnailUrl;
     let estrelas;
     switch (livro.score){
@@ -38,7 +38,7 @@ export default function CaixaLivro({livro}){
                     <ul>
                         {autores.map(autor =>{
                             return(
-                                <li>
+                                <li key={autor}> 
                                     {autor}
                                 </li>
                             )

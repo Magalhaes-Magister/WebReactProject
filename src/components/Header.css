@@ -23,3 +23,20 @@
   padding-left: 30px;
 }
 
+
+
+#shopping_cart:hover {
+  cursor: pointer;
+}
+
+#shopping_cart:active {
+  display: block;
+}
+
+.cart-hover {
+  position: absolute;
+  display: none;
+}
+#shopping_cart:active + .cart-hover {
+  display: block;
+}
