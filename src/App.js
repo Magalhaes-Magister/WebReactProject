@@ -5,7 +5,7 @@ import Pagina_Principal from './Pagina_Principal.js';
 function App() {
   return (
     <>
-      <Pagina_Principal />
+      <Pagina_Pesquisa />
     </>
   );
 }

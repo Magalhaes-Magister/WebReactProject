@@ -3,7 +3,7 @@ import CaixaLivro from "./caixaLivro";
 import Books from "../db.json";
 
 export default function CaixaCaixaLivro(){
-    let books = Books.books.slice(0,10);
+    let books = Books.books.slice(0,5);
     console.log(books);
 
     return(
