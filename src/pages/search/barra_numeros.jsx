@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './barra_numero.css';
-<<<<<<< HEAD:src/components/barra_numeros.jsx
-import db from '../db.json';
-import CaixaCaixaLivro from './caixaCaixaLivro';
-import Filtro from './Filtro';
-=======
 import db from '../../db.json';
 import CaixaCaixaLivro from '../../components/caixaCaixaLivro';
->>>>>>> 611da071c5315a2ea57399751f872c80062bb2a3:src/pages/search/barra_numeros.jsx
+import Filtro from './Filtro';
 
 function BarraNumero() {
   const totalBooks = db.books.length;
