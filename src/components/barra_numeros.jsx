@@ -1,43 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './barra_numero.css';
 import db from '../db.json';
 import CaixaCaixaLivro from './caixaCaixaLivro';
+import Filtro from './Filtro';
 
 function BarraNumero() {
   const totalBooks = db.books.length;
-  const booksPerPage = 5;
-  const totalPages = Math.ceil(totalBooks / booksPerPage);
+  const booksPorPagina = 5;
+  const totalPaginas = Math.ceil(totalBooks / booksPorPagina);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [Pagina_Atual, setPagina_Atual] = useState(1);
   const [clickedNumber, setClickedNumber] = useState('');
+  const [scoreFiltro, setscoreFiltro] = useState({ min: 0, max: 5 });
+  const [priceFiltro, setpriceFiltro] = useState({ min: 0, max: 30 });
+
+  useEffect(() => {
+    setPagina_Atual(1);
+    setClickedNumber(1);
+  }, [totalPaginas]);
 
   const handleClick = (number) => {
-    setCurrentPage(number);
+    setPagina_Atual(number);
     setClickedNumber(number);
   };
 
-  const handleFirstPage = () => {
-    setCurrentPage(1);
+  const handlePrimeiraPagina = () => {
+    setPagina_Atual(1);
     setClickedNumber(1);
   };
 
-  const handleNextPage = () => {
-    const nextPage = currentPage + 1;
-    if (nextPage <= totalPages) {
-      setCurrentPage(nextPage);
-      setClickedNumber(nextPage);
+  const handleProximaPagina = () => {
+    const ProximaPagina = Pagina_Atual + 1;
+    if (ProximaPagina <= totalPaginas) {
+      setPagina_Atual(ProximaPagina);
+      setClickedNumber(ProximaPagina);
     }
   };
 
-  const calculateStartEndIndexes = () => {
+  const CalculoStartEndIndex = () => {
     let start;
     let end;
-    if (clickedNumber >= 2 && clickedNumber <= totalPages - 4) {
+    if (clickedNumber >= 2 && clickedNumber <= totalPaginas - 4) {
       start = clickedNumber - 1;
       end = clickedNumber + 3;
-    } else if (clickedNumber > totalPages - 4) {
-      start = totalPages - 4;
-      end = totalPages;
+    } else if (clickedNumber > totalPaginas - 4) {
+      start = totalPaginas - 4;
+      end = totalPaginas;
     } else {
       start = 1;
       end = 5;
@@ -45,21 +53,22 @@ function BarraNumero() {
     return { start, end };
   };
 
-  const calculateStartEndLivro = () => {
-    const start_livro = (currentPage - 1) * booksPerPage + 1;
-    const end_livro = currentPage * booksPerPage;
-    return { start_livro, end_livro };
-  }
+  const CalculoStartEndLivro = () => {
+    const start_book = (Pagina_Atual - 1) * booksPorPagina + 1;
+    const end_book = Pagina_Atual * booksPorPagina;
+    return { start_book, end_book };
+  };
 
-  const { start, end } = calculateStartEndIndexes();
-  const {start_livro, end_livro} = calculateStartEndLivro();
+  const { start, end } = CalculoStartEndIndex();
+  const { start_book, end_book } = CalculoStartEndLivro();
 
   return (
     <div className="barra_numero">
-      <CaixaCaixaLivro start={start_livro} end={end_livro} />
+      <Filtro setscoreFiltro={setscoreFiltro} setpriceFiltro={setpriceFiltro} />
+      <CaixaCaixaLivro start={start_book} end={end_book} scoreFiltro={scoreFiltro} priceFiltro={priceFiltro} />
       <ul id="barra">
-        <li id="next" onClick={handleFirstPage}>First</li>
-        {Array.from({ length: Math.ceil(totalPages) }, (_, index) => (
+        <li id="next" onClick={handlePrimeiraPagina}>First</li>
+        {Array.from({ length: Math.ceil(totalPaginas) }, (_, index) => (
           <li
             className={`numeros_iniciais ${clickedNumber === index + 1 ? 'active' : ''}`}
             key={index + 1}
@@ -68,10 +77,9 @@ function BarraNumero() {
             {index + 1}
           </li>
         )).slice(start - 1, end)}
-        <li id="numero_final">{totalPages}</li>
-        <li id="next" onClick={handleNextPage}>Next</li>
+        <li id="numero_final">{totalPaginas}</li>
+        <li id="next" onClick={handleProximaPagina}>Next</li>
       </ul>
-
     </div>
   );
 }
