@@ -4,17 +4,20 @@ import Pagina_Principal from './pages/home/Pagina_Principal.js';
 import Carrinho from "./pages/cart/carrinho";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Header from './components/Header.jsx'
+import {ShopContextProvider} from "./context/shop-context";
 
 function App() {
   return (
     <>
-        <Router>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Pagina_Principal />}/>
-                <Route path="/carrinho" element={<Carrinho />}/>
-            </Routes>
-        </Router>
+        <ShopContextProvider>
+            <Router>
+                <Header />
+                <Routes>
+                    <Route path="/" element={<Pagina_Principal />}/>
+                    <Route path="/carrinho" element={<Carrinho />}/>
+                </Routes>
+            </Router>
+        </ShopContextProvider>
     </>
   );
 }
