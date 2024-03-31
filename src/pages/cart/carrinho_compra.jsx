@@ -1,6 +1,6 @@
 import React from 'react';
 import './carrinho_compra.css';
-import CaixaLivro from './caixaLivro';
+import CaixaLivro from '../../components/caixaLivro';
 
 function carrinho_compra() {
     return (
