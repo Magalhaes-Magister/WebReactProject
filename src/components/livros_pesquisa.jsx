@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './barra_numero.css';
 import db from '../db.json';
 import CaixaCaixaLivro from './caixaCaixaLivro';
 import Filtro from './Filtro';
+import BarraNumero from './barra_numero'; 
 
-function BarraNumero() {
+function LivrosPesquisados() { 
   const totalBooks = db.books.length;
   const booksPorPagina = 5;
   const totalPaginas = Math.ceil(totalBooks / booksPorPagina);
@@ -66,22 +66,17 @@ function BarraNumero() {
     <div className="barra_numero">
       <Filtro setscoreFiltro={setscoreFiltro} setpriceFiltro={setpriceFiltro} />
       <CaixaCaixaLivro start={start_book} end={end_book} scoreFiltro={scoreFiltro} priceFiltro={priceFiltro} />
-      <ul id="barra">
-        <li id="next" onClick={handlePrimeiraPagina}>First</li>
-        {Array.from({ length: Math.ceil(totalPaginas) }, (_, index) => (
-          <li
-            className={`numeros_iniciais ${clickedNumber === index + 1 ? 'active' : ''}`}
-            key={index + 1}
-            onClick={() => handleClick(index + 1)}
-          >
-            {index + 1}
-          </li>
-        )).slice(start - 1, end)}
-        <li id="numero_final">{totalPaginas}</li>
-        <li id="next" onClick={handleProximaPagina}>Next</li>
-      </ul>
+      <BarraNumero
+        totalPaginas={totalPaginas}
+        clickedNumber={clickedNumber}
+        handleClick={handleClick}
+        handlePrimeiraPagina={handlePrimeiraPagina}
+        handleProximaPagina={handleProximaPagina}
+        start={start}
+        end={end}
+      />
     </div>
   );
 }
 
-export default BarraNumero;
+export default LivrosPesquisados;
