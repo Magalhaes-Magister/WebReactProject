@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './barra_numero.css';
-import db from '../../db.json';
-import CaixaCaixaLivro from '../../components/caixaCaixaLivro';
+import db from '../db.json';
+import CaixaCaixaLivro from './caixaCaixaLivro';
 import Filtro from './Filtro';
 
 function BarraNumero() {
