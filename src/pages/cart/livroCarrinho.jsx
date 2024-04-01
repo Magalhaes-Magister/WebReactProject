@@ -1,40 +1,28 @@
 import Books from '../../db.json'
 import './livroCarrinho_style.css'
-import {useState} from 'react'
+import {useContext, useState} from 'react'
+import {ShopContext} from "../../context/shop-context";
 
-export default function LivroCarrinho(){
-    let livro = Books.books[0];
-    let titulo = livro.title;
-    let thumbnail = livro.thumbnailUrl;
-    let num = 1;
+export default function LivroCarrinho({livro}){
+    const { id, title, thumbnailUrl } = livro;
+    const {cartItems, addToCart, removeFromCart, updateCartItemCount} = useContext(ShopContext);
 
-
-    const[container, setContainer] = useState(1)
-
-    const increase =() => {
-        setContainer(count => count + 1)
-    };
-    const decrease= () => {
-        setContainer(count => count - 1)
-    };
-
-    if(container<1){
-        return (<></>);
-    } else { return(
+    return(
         <>
             <div className={"caixaCa"}>
-                <img src={thumbnail}/>
+                <img src={thumbnailUrl}/>
                 <div className={"infoCa"}>
-                    <strong>{titulo}</strong>
+                    <strong>{title}</strong>
                     <div className={"numCa"}>
-                        <button onClick={decrease}>-</button>
-                        <span className={"num_container"}>{container}</span>
-                        <button onClick={increase}>+</button>
+                        <button onClick={() => removeFromCart(id)}>-</button>
+                        <input value={cartItems.find((item) => { return item.id === id}).quantity}
+                                onChange={(n) => updateCartItemCount(Number(n.target.value), id)}/>
+                        <button onClick={() => addToCart(id)}>+</button>
                     </div>
                 </div>
             </div>
         </>
-    )}
+    )
 
 
 }

@@ -15,7 +15,6 @@ function Pagina_Principal() {
         <div className="Pesquisa">
           <Pesquisa style="" />
         </div>
-          <LivroCarrinho/>
         <div className="CaixaCaixaLivro"></div>
         <CaixaCaixaLivro />
       </div>
