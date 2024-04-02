@@ -1,9 +1,8 @@
 import LivroCarrinho from "./livroCarrinho";
 import React, {useContext} from 'react'
 import {ShopContext} from "../../context/shop-context";
-import Books from '../../db.json'
+import {BOOKS} from "../../books";
 
-const BOOKS = Books.books;
 export default function Carrinho() {
     const {cartItems, deleteCart} = useContext(ShopContext);
 

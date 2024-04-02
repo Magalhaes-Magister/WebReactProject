@@ -5,14 +5,16 @@ import star_3 from '../images/3_stars.png'
 import star_4 from '../images/4_stars.png'
 import star_5 from '../images/5_stars.png'
 import basket from '../images/basket.png'
+import missing from '../images/missing_img.png'
 import {ShopContext} from '../context/shop-context';
 import {useContext} from "react";
+
 export default function CaixaLivro({livro}){
     const {addToCart} = useContext(ShopContext);
 
     let titulo = livro.title;
     let autores = livro.authors || [];
-    let thumbnail = livro.thumbnailUrl;
+    let thumbnail = livro.thumbnailUrl || 'missing';
     let estrelas;
     switch (livro.score){
         case 1:
@@ -32,10 +34,16 @@ export default function CaixaLivro({livro}){
             break;
     }
 
+
     return(
         <>
             <div className={"caixa"}>
-                <img src={thumbnail} width={155}/>
+                <img id="img" src={thumbnail} alt="" width={155}
+                     onError={event => {
+                         event.target.src = missing
+                         event.onerror = null
+                     }}
+                />
                 <div className="info">
                     <strong>{titulo}</strong>
                     <ul>

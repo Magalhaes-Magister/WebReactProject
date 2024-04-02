@@ -1,6 +1,4 @@
 import React, {createContext, useState} from 'react'
-import Books from '../db.json'
-const BOOKS = Books.books || [];
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
