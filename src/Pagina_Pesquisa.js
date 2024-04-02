@@ -8,22 +8,24 @@ import Livros_pesquisados from './components/livros_pesquisa.jsx';
 
 
 function Pagina_Principal() {
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState("autor");
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
   const handleCategoriaChange = (novaCategoria) => {
     setCategoriaSelecionada(novaCategoria);
   };
+  const [InputCategoria, setInputCategoria] = useState('');
   
+
   return (
     <>
       <div className="App">
         <Header />
         <div className="Pesquisa">
-          <Pesquisa onCategoriaChange={handleCategoriaChange} />
+          <Pesquisa onCategoriaChange={handleCategoriaChange} setInputCategoria={setInputCategoria}/>
         </div>
       
       </div>
       <div className="Livros_pesquisados">
-        <Livros_pesquisados categoriaSelecionada={categoriaSelecionada}  />
+        <Livros_pesquisados InputCategoria={InputCategoria} categoriaSelecionada={categoriaSelecionada} />
       </div>
       <House />
       <Footer />

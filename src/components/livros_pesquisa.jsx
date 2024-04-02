@@ -4,11 +4,10 @@ import CaixaCaixaLivro from './caixaCaixaLivro';
 import Filtro from './Filtro';
 import BarraNumero from './barra_numero'; 
 
-function LivrosPesquisados() { 
+function LivrosPesquisados(InputCategoria, categoriaSelecionada) { 
   const totalBooks = db.books.length;
   const booksPorPagina = 5;
   const totalPaginas = Math.ceil(totalBooks / booksPorPagina);
-
   const [Pagina_Atual, setPagina_Atual] = useState(1);
   const [clickedNumber, setClickedNumber] = useState('');
   const [scoreFiltro, setscoreFiltro] = useState({ min: 0, max: 5 });
@@ -65,7 +64,14 @@ function LivrosPesquisados() {
   return (
     <div className="barra_numero">
       <Filtro setscoreFiltro={setscoreFiltro} setpriceFiltro={setpriceFiltro} />
-      <CaixaCaixaLivro start={start_book} end={end_book} scoreFiltro={scoreFiltro} priceFiltro={priceFiltro} />
+      <CaixaCaixaLivro
+      start={start}
+      end={end}
+      scoreFiltro={scoreFiltro}
+      priceFiltro={priceFiltro}
+      autorCategoria={InputCategoria} 
+      categoriaSelecionada={categoriaSelecionada} 
+      />
       <BarraNumero
         totalPaginas={totalPaginas}
         clickedNumber={clickedNumber}

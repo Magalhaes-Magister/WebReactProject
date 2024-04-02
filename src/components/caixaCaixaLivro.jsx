@@ -3,12 +3,21 @@ import './caixaCaixaLivroStyle.css';
 import CaixaLivro from './caixaLivro';
 import db from '../db.json';
 
-export default function CaixaCaixaLivro({ start, end, scoreFiltro, priceFiltro }) {
-  const BooksFiltrados = db.books.filter(book => {
-    const Intervalo_score = book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
-    //const priceInRange = book.price >= priceFiltro.min && book.price <= priceFiltro.max;
-    return Intervalo_score;
-  });
+export default function CaixaCaixaLivro({ start, end, scoreFiltro, priceFiltro, autorCategoria, categoriaSelecionada }) {
+  let BooksFiltrados = db.books;
+  console.log("autorCategoria:", autorCategoria);
+  console.log("categoriaSelecionada:", categoriaSelecionada);
+  if (scoreFiltro.min !== undefined && scoreFiltro.max !== undefined) {
+    BooksFiltrados = BooksFiltrados.filter(book => {
+      return book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
+    });
+  }
+
+  if (autorCategoria && autorCategoria.length > 0) {
+    BooksFiltrados = BooksFiltrados.filter(book => {
+      return autorCategoria.includes(book.authors);
+    });
+  }
 
   const books_mostrar = BooksFiltrados.slice(start - 1, end);
 
