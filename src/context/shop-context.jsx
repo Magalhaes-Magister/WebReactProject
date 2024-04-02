@@ -3,34 +3,36 @@ import Books from '../db.json'
 const BOOKS = Books.books || [];
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-    let cart = [];
-    for(let i=0; i < BOOKS.length ;i++){
-        cart[i] = {id: BOOKS[i].id, quantity: 0};
-    }
-    return cart;
-}
 export const ShopContextProvider = (props) => {
-    const [cartItems, setCartItems] = useState(getDefaultCart());
+    const [cartItems, setCartItems] = useState([]);
 
     const addToCart = (itemId) => {
-        setCartItems(cartItems.map((item) => {
+        if(cartItems.length === 0 || !cartItems.find((item) => item.id === itemId)){
+            setCartItems((prevState) => [...prevState, {id: itemId, quantity: 1}])
+        }
+        else{
+            setCartItems(cartItems.map((item) => {
             if (item.id === itemId){
                 return{...item, quantity: item.quantity +1}
             } else {
-            return item
+                return item
             }
-        }))
+        }))}
     };
 
     const removeFromCart = (itemId) => {
-        setCartItems(cartItems.map((item) => {
-            if (item.id === itemId){
-                return{...item, quantity: item.quantity -1}
-            } else {
-                return item
-            }
-        }))
+        if(cartItems.find((item) => { return item.id === itemId}).quantity <= 1){
+            setCartItems(cartItems.filter(item => item.id !== itemId))
+        } else{
+            setCartItems(cartItems.map((item) => {
+                if (item.id === itemId){
+                    return{...item, quantity: item.quantity -1}
+                } else {
+                    return item
+                }
+            }))
+        }
+
     };
 
     const updateCartItemCount = (newAmount, itemId) => {
@@ -42,8 +44,12 @@ export const ShopContextProvider = (props) => {
             }
         }))
     }
+
+    const deleteCart = () =>{
+        setCartItems([])
+    }
     console.log(cartItems);
-    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount}
+    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount, deleteCart}
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
 

@@ -5,14 +5,15 @@ import Books from '../../db.json'
 
 const BOOKS = Books.books;
 export default function Carrinho() {
-    const {cartItems} = useContext(ShopContext);
+    const {cartItems, deleteCart} = useContext(ShopContext);
 
     return (
         <div>
             <h1>Your Cart Items</h1>
+            <button onClick={() => deleteCart()}>Delete Cart</button>
             <div className="cartItems">
                 {BOOKS.map((product) => {
-                    if(cartItems.some(item => item.id ===  product.id && item.quantity !== 0) ){
+                    if(cartItems.some(item => item.id ===  product.id) ){
                         return <LivroCarrinho livro={product} key={product.id}/>
                     }else{
                         return null
