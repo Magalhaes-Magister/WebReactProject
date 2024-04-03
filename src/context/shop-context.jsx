@@ -6,6 +6,12 @@ export const ShopContext = createContext(null);
 export const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState([]);
 
+    const numberCartItems = () => {
+      let total = 0;
+      cartItems.forEach((item) => {total += item.quantity});
+        return total;
+    };
+
     const getTotalCartAmount = () => {
         let total = 0;
         cartItems.forEach((item) => {
@@ -57,7 +63,7 @@ export const ShopContextProvider = (props) => {
         setCartItems([])
     }
     console.log(cartItems);
-    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount, deleteCart, getTotalCartAmount}
+    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount, deleteCart, getTotalCartAmount, numberCartItems}
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
 

@@ -3,9 +3,12 @@ import './Header.css';
 import logo from '../images/book_logo.png';
 import shoppingCar from '../images/car_logo.png';
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {ShopContext} from "../context/shop-context";
 
 function Header() {
-  const cartCount = 15; 
+    const {numberCartItems} = useContext(ShopContext);
+  const cartCount = numberCartItems();
 
   return (
     <header className="header">
