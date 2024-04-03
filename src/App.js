@@ -1,4 +1,5 @@
-import Pagina_Principal from './Pagina_Principal.js';
+import React from 'react';
+import Pagina_Pesquisa from './pages/search/Pagina_Pesquisa';
 import Carrinho from "./pages/cart/carrinho";
 import {IndividualBook} from "./pages/individualBooks/individualBook";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";

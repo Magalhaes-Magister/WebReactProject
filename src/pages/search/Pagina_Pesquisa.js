@@ -20,14 +20,12 @@ function Pagina_Principal() {
         <div className="Pesquisa">
           <Pesquisa onCategoriaChange={handleCategoriaChange} setInputCategoria={setInputCategoria}/>
         </div>
-        <div className="Filtro">
-        <Filtro />
-      </div>
       
       </div>
       <div className="Livros_pesquisados">
         <Livros_pesquisados InputCategoria={InputCategoria} categoriaSelecionada={categoriaSelecionada} />
       </div>
+
     </>
   );
 }
