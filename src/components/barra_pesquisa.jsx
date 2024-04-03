@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import './barra_pesquisa.css';
 
 function Pesquisa({ onCategoriaChange, setInputCategoria }) {
-    const [categoria, setCategoria] = useState('autor'); // Estado da categoria
-    const [inputValue, setInputValue] = useState(''); // Estado do valor do input
+    const [categoria, setCategoria] = useState('titulo'); 
+    const [inputValue, setInputValue] = useState(''); 
 
     const handleCategoriaChange = (event) => {
         const selectedCategoria = event.target.value;
-        setCategoria(selectedCategoria); // Atualizar o estado da categoria
-        onCategoriaChange(selectedCategoria); // Chamar a função de callback com a nova categoria selecionada
+        setCategoria(selectedCategoria); 
+        onCategoriaChange(selectedCategoria); 
     };
 
     const handleInputChange = (event) => {
-        setInputValue(event.target.value); // Atualizar o estado do valor do input
+        setInputValue(event.target.value); 
     };
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            setInputCategoria(inputValue); // Chamar a função de callback com o valor do input quando a tecla Enter for pressionada
+            setInputCategoria(inputValue); 
         }
     };
 
