@@ -21,7 +21,9 @@ function Header() {
         <Link id="menu" to="/carrinho">
           <ul>
             <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
+              {cartCount > 0 ? (
             <span className="cart-count" style={{ borderRadius: '50%', backgroundColor: 'black', color: 'rgb(239, 188, 155)', padding: '8px' }}>{cartCount}</span>
+                  ) : (<></>)}
           </ul>
         </Link>
     </header>
