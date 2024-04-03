@@ -1,8 +1,18 @@
 import React, {createContext, useState} from 'react'
+import {BOOKS} from "../books";
+
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState([]);
+
+    const getTotalCartAmount = () => {
+        let total = 0;
+        cartItems.forEach((item) => {
+            total += BOOKS.find((book) => book.id === item.id).price * item.quantity
+        })
+        return total;
+    };
 
     const addToCart = (itemId) => {
         if(cartItems.length === 0 || !cartItems.find((item) => item.id === itemId)){
@@ -47,7 +57,7 @@ export const ShopContextProvider = (props) => {
         setCartItems([])
     }
     console.log(cartItems);
-    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount, deleteCart}
+    const contextValue = {cartItems, addToCart, removeFromCart, updateCartItemCount, deleteCart, getTotalCartAmount}
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
 

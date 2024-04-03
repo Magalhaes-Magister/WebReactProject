@@ -4,7 +4,8 @@ import {ShopContext} from "../../context/shop-context";
 import {BOOKS} from "../../books";
 
 export default function Carrinho() {
-    const {cartItems, deleteCart} = useContext(ShopContext);
+    const {cartItems, deleteCart, getTotalCartAmount} = useContext(ShopContext);
+    const totalAmount = getTotalCartAmount();
 
     return (
         <div>
@@ -19,6 +20,9 @@ export default function Carrinho() {
                     }
                 })}
             </div>
+            <p>Total: {totalAmount}€</p>
+            <button>Continuar a comprar</button>
+            <button>Checkout</button>
         </div>
     )
 }
