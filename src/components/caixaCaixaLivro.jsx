@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './caixaCaixaLivroStyle.css';
 import CaixaLivro from './caixaLivro';
-import {BOOKS} from '../books'
+import db from '../db.json';
 
-export default function CaixaCaixaLivro({ start, end, scoreFiltro, priceFiltro, input, categoriaSelecionada, setBooksMostrar }) {
+export default function CaixaCaixaLivro({ start, end, scoreFiltro, input, categoriaSelecionada }) {
   let BooksFiltrados = db.books;
 
-  if (scoreFiltro.min !== undefined && scoreFiltro.max !== undefined) {
+  if (scoreFiltro && scoreFiltro.min !== undefined && scoreFiltro.max !== undefined) {
     BooksFiltrados = BooksFiltrados.filter(book => {
       return book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
     });
@@ -17,7 +17,6 @@ export default function CaixaCaixaLivro({ start, end, scoreFiltro, priceFiltro, 
       return book.authors.includes(input);
     });
   }
-
 
   if (categoriaSelecionada === 'titulo' && input && input.length > 0) {
     BooksFiltrados = BooksFiltrados.filter(book => {
@@ -32,15 +31,12 @@ export default function CaixaCaixaLivro({ start, end, scoreFiltro, priceFiltro, 
   }
 
   const books_mostrar = BooksFiltrados.slice(start - 1, end);
-
- 
+  console.log(books_mostrar);
   return (
-    <>
-      <div className="caixa_grande">
-        {BOOKS.map((b, index) => (
-          <CaixaLivro key={index} livro={b} />
-        ))}
-      </div>
-    </>
+    <div className="caixa_grande">
+      {books_mostrar.map((b, index) => (
+        <CaixaLivro key={index} livro={b} />
+      ))}
+    </div>
   );
 }

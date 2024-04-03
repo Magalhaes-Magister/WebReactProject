@@ -5,11 +5,17 @@ import star_3 from '../images/3_stars.png'
 import star_4 from '../images/4_stars.png'
 import star_5 from '../images/5_stars.png'
 import basket from '../images/basket.png'
+import missing from '../images/missing_img.png'
+import {ShopContext} from '../context/shop-context';
+import {useContext} from "react";
+import {Link} from "react-router-dom";
+
 export default function CaixaLivro({livro}){
-    
+    const {addToCart} = useContext(ShopContext);
+
     let titulo = livro.title;
-    let autores = livro.authors;
-    let thumbnail = livro.thumbnailUrl;
+    let autores = livro.authors || [];
+    let thumbnail = livro.thumbnailUrl || 'missing';
     let estrelas;
     switch (livro.score){
         case 1:
@@ -29,10 +35,18 @@ export default function CaixaLivro({livro}){
             break;
     }
 
+
     return(
         <>
-            <div className={"caixa"}>
-                <img src={thumbnail} width={155}/>
+
+            <div  className={"caixa"}>
+                <Link to={`/livro/${livro.id}`}>
+                <img id="img" src={thumbnail} alt="" width={155}
+                     onError={event => {
+                         event.target.src = missing
+                         event.onerror = null
+                     }}
+                />
                 <div className="info">
                     <strong>{titulo}</strong>
                     <ul>
@@ -44,10 +58,11 @@ export default function CaixaLivro({livro}){
                             )
                         })}
                     </ul>
-                    <img className={"rating"} src={estrelas} width={150}/>
+                    <img className={"rating"} src={estrelas} alt="rating" width={150}/>
                 </div>
-                <button>
-                    <img src={basket} width={25}/>
+                </Link>
+                <button onClick={() => addToCart(livro.id)}>
+                    <img src={basket} alt="" width={25}/>
                     Comprar
                 </button>
             </div>

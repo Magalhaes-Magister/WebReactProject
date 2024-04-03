@@ -14,7 +14,7 @@ function App() {
             <Router>
                 <Header />
                     <Routes>
-                        <Route path="/" element={<Pagina_Principal />}/>
+                        <Route path="/" element={<Pagina_Pesquisa />}/>
                         <Route path="/carrinho" element={<Carrinho />}/>
                         <Route path="/livro/:livroId" element={<IndividualBook />}/>
                     </Routes>
