@@ -67,12 +67,12 @@ function LivrosPesquisados(InputCategoria) {
     <div className="barra_numero">
       <Filtro setscoreFiltro={setscoreFiltro} setpriceFiltro={setpriceFiltro} />
       <CaixaCaixaLivro
-      start={start}
-      end={end}
-      scoreFiltro={scoreFiltro}
-      priceFiltro={priceFiltro}
-      input={Input}
-      categoriaSelecionada={Categoria}
+        start={start}
+        end={end}
+        scoreFiltro={scoreFiltro}
+        priceFiltro={priceFiltro}
+        input={Input}
+        categoriaSelecionada={Categoria}
       />
       <BarraNumero
         totalPaginas={totalPaginas}

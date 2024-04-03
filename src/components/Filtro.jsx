@@ -14,7 +14,7 @@ function Filtro({ setscoreFiltro, setpriceFiltro }) {
     return (
         <div className="filtro">
             <div className="Botao_filtro">
-                <button className="Botao_Principal">Ordenar Por</button>
+                <button className="Botao_Principal">Filtros</button>
                 <div className="Botao_drop">
                     <div className="Botao_segundario">
                         <a href="#">Ranking</a>
