@@ -8,6 +8,7 @@ import basket from '../images/basket.png'
 import missing from '../images/missing_img.png'
 import {ShopContext} from '../context/shop-context';
 import {useContext} from "react";
+import {Link} from "react-router-dom";
 
 export default function CaixaLivro({livro}){
     const {addToCart} = useContext(ShopContext);
@@ -37,7 +38,9 @@ export default function CaixaLivro({livro}){
 
     return(
         <>
-            <div className={"caixa"}>
+
+            <div  className={"caixa"}>
+                <Link to={`/livro/${livro.id}`}>
                 <img id="img" src={thumbnail} alt="" width={155}
                      onError={event => {
                          event.target.src = missing
@@ -49,16 +52,17 @@ export default function CaixaLivro({livro}){
                     <ul>
                         {autores.map(autor =>{
                             return(
-                                <li key={autor}> 
+                                <li>
                                     {autor}
                                 </li>
                             )
                         })}
                     </ul>
-                    <img className={"rating"} src={estrelas} width={150}/>
+                    <img className={"rating"} src={estrelas} alt="rating" width={150}/>
                 </div>
+                </Link>
                 <button onClick={() => addToCart(livro.id)}>
-                    <img src={basket} width={25}/>
+                    <img src={basket} alt="" width={25}/>
                     Comprar
                 </button>
             </div>
