@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 import './Filtro.css';
 
 function Filtro({ setscoreFiltro, setpriceFiltro }) {

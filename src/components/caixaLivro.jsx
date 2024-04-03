@@ -52,7 +52,7 @@ export default function CaixaLivro({livro}){
                     <ul>
                         {autores.map(autor =>{
                             return(
-                                <li>
+                                <li key={autor}> 
                                     {autor}
                                 </li>
                             )
