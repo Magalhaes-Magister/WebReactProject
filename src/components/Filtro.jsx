@@ -40,4 +40,5 @@ function Filtro({ setscoreFiltro, setpriceFiltro }) {
     );
 }
 
+
 export default Filtro;
