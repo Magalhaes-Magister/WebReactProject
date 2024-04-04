@@ -50,13 +50,7 @@ export default function CaixaLivro({livro}){
                 <div className="info">
                     <strong>{titulo}</strong>
                     <ul>
-                        {autores.map(autor =>{
-                            return(
-                                <li>
-                                    {autor}
-                                </li>
-                            )
-                        })}
+                        {autores.map(autor =>{return(<li>{autor}</li>)})}
                     </ul>
                     <img className={"rating"} src={estrelas} alt="rating" width={150}/>
                 </div>

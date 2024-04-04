@@ -18,6 +18,7 @@ function Header() {
             <h1 style={{ color: 'black' }}>BookStore</h1>
           </div>
         </Link>
+        <Link to="/livro">Livros</Link>
         <Link id="menu" to="/carrinho">
           <ul>
             <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
