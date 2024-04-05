@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagina_Principal from "./pages/home/Pagina_Principal";
 import Pagina_Pesquisa from './pages/search/Pagina_Pesquisa';
 import Carrinho from "./pages/cart/carrinho";
 import {IndividualBook} from "./pages/individualBooks/individualBook";
@@ -13,7 +14,8 @@ function App() {
             <Router>
                 <Header />
                     <Routes>
-                        <Route path="/" element={<Pagina_Pesquisa />}/>
+                        <Route path="/" element={<Pagina_Principal />}/>
+                        <Route path="/livro" element={<Pagina_Pesquisa />}/>
                         <Route path="/carrinho" element={<Carrinho />}/>
                         <Route path="/livro/:livroId" element={<IndividualBook />}/>
                     </Routes>
