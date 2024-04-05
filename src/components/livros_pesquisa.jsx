@@ -54,14 +54,9 @@ function LivrosPesquisados(InputCategoria) {
     return { start, end };
   };
 
-  const CalculoStartEndLivro = () => {
-    const start_book = (Pagina_Atual - 1) * booksPorPagina + 1;
-    const end_book = Pagina_Atual * booksPorPagina;
-    return { start_book, end_book };
-  };
 
   const { start, end } = CalculoStartEndIndex();
-  const { start_book, end_book } = CalculoStartEndLivro();
+ 
 
   return (
     <div className="barra_numero">
