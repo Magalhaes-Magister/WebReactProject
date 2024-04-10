@@ -5,13 +5,13 @@
     width: 280px;
     border-radius: 5px;
     display: flex;
-    
+
   }
-  
-  
+
+
 #barra-pesquisa input[type="text"] {
-    border: none; 
-    outline: none; 
+    border: none;
+    outline: none;
   }
 
 
