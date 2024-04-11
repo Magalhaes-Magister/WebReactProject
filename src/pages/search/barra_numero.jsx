@@ -1,21 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './barra_numero.css';
+import { ShopContext } from "../../context/shop-context";
 
-function BarraNumero({ totalPaginas, clickedNumber, handleClick, handlePrimeiraPagina, handleProximaPagina, start, end }) {
+function BarraNumero( ) {
+  const { totalPaginas, clickedNumber, handlePrimeiraPagina, handleClick, handleNextClick, start, end } = useContext(ShopContext);
   return (
     <ul id="barra">
       <li id="next" onClick={handlePrimeiraPagina}>First</li>
-      {Array.from({ length: Math.ceil(totalPaginas) }, (_, index) => (
+      {Array.from({ length: totalPaginas }, (_, index) => {
+        const numero = start + index + 1; 
+        return (
+          <li
+            className={`numeros_iniciais ${clickedNumber === numero ? 'active' : ''}`}
+            key={numero}
+            onClick={() => handleClick(numero)}
+          >
+            {numero}
+          </li>
+        );
+      })}
+      {end < totalPaginas && <li id="pontos">...</li>}
+      {end !== totalPaginas && (
         <li
-          className={`numeros_iniciais ${clickedNumber === index + 1 ? 'active' : ''}`}
-          key={index + 1}
-          onClick={() => handleClick(index + 1)}
+          className={`numeros_iniciais ${clickedNumber === totalPaginas ? 'active' : ''}`}
+          onClick={() => handleClick(totalPaginas)}
         >
-          {index + 1}
+          {totalPaginas}
         </li>
-      )).slice(start - 1, end)}
-      <li id="numero_final">{totalPaginas}</li>
-      <li id="next" onClick={handleProximaPagina}>Next</li>
+      )}
+      <li id="next" onClick={handleNextClick}>Next</li>
     </ul>
   );
 }

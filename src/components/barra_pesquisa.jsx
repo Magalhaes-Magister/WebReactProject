@@ -20,7 +20,7 @@ function Pesquisa({ onCategoriaChange, setInputCategoria }) {
             setInputCategoria(inputValue); 
         }
     };
-
+    console.log(inputValue);
     return (
         <div id="barra-pesquisa">
             <div className="pesquisa">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Pagina_Principal from "./pages/home/Pagina_Principal";
 import Pagina_Pesquisa from './pages/search/Pagina_Pesquisa';
 import Carrinho from "./pages/cart/carrinho";
@@ -6,6 +6,7 @@ import {IndividualBook} from "./pages/individualBooks/individualBook";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Header from './components/Header.jsx'
 import {ShopContextProvider} from "./context/shop-context";
+import {BOOKS} from "./books";
 
 function App() {
   return (

@@ -1,0 +1,17 @@
+.Pesquisa{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.Livros_pesquisados {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.Filtro{
+    display: flex;
+    justify-content: right;
+    margin-top: 20px;
+}
