@@ -1,5 +1,5 @@
 import React, {createContext, useState} from 'react'
-import {BOOKS} from "../books";
+import {BOOKS} from "../books.js";
 
 export const ShopContext = createContext(null);
 
@@ -9,14 +9,6 @@ export const ShopContextProvider = (props) => {
     const numberCartItems = () => {
       let total = 0;
       cartItems.forEach((item) => {total += item.quantity});
-        return total;
-    };
-
-    const getTotalCartAmount = () => {
-        let total = 0;
-        cartItems.forEach((item) => {
-            total += BOOKS.find((book) => book.id === item.id).price * item.quantity
-        })
         return total;
     };
 
@@ -58,6 +50,14 @@ export const ShopContextProvider = (props) => {
             }
         }))
     }
+
+    const getTotalCartAmount = () => {
+        let total = 0;
+        cartItems.forEach((item) => {
+            total += BOOKS.find((book) => book.id === item.id).price * item.quantity
+        })
+        return total;
+    };
 
     const deleteCart = () =>{
         setCartItems([])

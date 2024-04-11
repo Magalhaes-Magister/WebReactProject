@@ -1,0 +1,42 @@
+.card{
+    width: 20rem !important;
+    height: 31rem !important;
+    padding: 10px !important;
+    margin: 10px !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px !important;
+}
+.cardImg{
+    width: 180px !important;
+    align-self: center !important;
+}
+.cardTitle{
+    font-weight: bold !important;
+    color: darkorange !important;
+}
+.cardUl{
+    font-size: 0.8em !important;
+    color: #5a5a5a !important;
+}
+.cardPrice{
+    font-size: 1.5em !important;
+    color: red !important;
+    font-weight: bold !important;
+}
+.cardStars{
+    margin-left: -10px !important;
+}
+a{
+    color: inherit !important;
+    text-decoration: none !important;
+}
+.cardInfo{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+}
+.img{
+    display: flex;
+    justify-content: center;
+}

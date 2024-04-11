@@ -1,9 +1,7 @@
 .caixa_grande{
-    margin: auto;
-    border-style: solid;
+    margin:auto !important;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    width: 80%;
 }

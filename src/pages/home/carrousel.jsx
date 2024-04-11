@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Link} from "react-router-dom";
 import Card from 'react-bootstrap/Card'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const books = BOOKS.filter(item => {return(item.score === 5)})
 

@@ -6,13 +6,14 @@ import {useNavigate} from "react-router-dom";
 
 export default function Carrinho() {
     const {cartItems, deleteCart, getTotalCartAmount} = useContext(ShopContext);
-    const totalAmount = getTotalCartAmount();
+    let totalAmount = getTotalCartAmount();
     const navigate = useNavigate();
 
     return (
         <div>
             <h1>Your Cart Items</h1>
             <div className="cartItems">
+                {console.log(totalAmount)}
                 {BOOKS.map((product) => {
                     if(cartItems.some(item => item.id ===  product.id) ){
                         return <LivroCarrinho livro={product} key={product.id}/>

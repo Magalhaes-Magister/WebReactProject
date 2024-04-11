@@ -2,6 +2,8 @@ import React from 'react';
 import './caixaCaixaLivroStyle.css';
 import CaixaLivro from './caixaLivro';
 import db from '../db.json';
+import Book from "./book";
+import Row from 'react-bootstrap/Row'
 
 export default function CaixaCaixaLivro({ start, end, scoreFiltro, input, categoriaSelecionada }) {
   let BooksFiltrados = db.books;
@@ -33,10 +35,10 @@ export default function CaixaCaixaLivro({ start, end, scoreFiltro, input, catego
   const books_mostrar = BooksFiltrados.slice(start - 1, end);
   console.log(books_mostrar);
   return (
-    <div className="caixa_grande">
+    <Row lg={4} className="caixa_grande">
       {books_mostrar.map((b, index) => (
-        <CaixaLivro key={index} livro={b} />
+        <Book key={index} livro={b} />
       ))}
-    </div>
+    </Row>
   );
 }
