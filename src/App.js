@@ -6,7 +6,7 @@ import {IndividualBook} from "./pages/individualBooks/individualBook";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Header from './components/Header.jsx'
 import {ShopContextProvider} from "./context/shop-context";
-import {BOOKS} from "./books";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
