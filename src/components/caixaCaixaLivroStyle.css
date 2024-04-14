@@ -1,7 +1,9 @@
 .caixa_grande{
     margin:auto !important;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
 }
+
+@media screen and (max-width: 430px) { .caixa_grande { width: 343px; } }
+@media screen and (min-width: 431px) and (max-width: 750px) { .caixa_grande { width: 343px; } }
+@media screen and (min-width: 751px) and (max-width: 1050px) { .caixa_grande { width:683px;  } }
+@media screen and (min-width: 1051px) and (max-width: 1400px) { .caixa_grande { width: 1023px; } }
+@media screen and (min-width: 1401px)  { .caixa_grande { width: 1363px; } }

@@ -43,31 +43,33 @@ export default function Book({livro}) {
     return (
         <Card className={Styles.card} >
             <NavLink to={`/livro/${livro.id}`}>
-                <div className={Styles.img}>
-            <Card.Img className={Styles.cardImg} src={thumbnail}
-                      onError={event => {
-                          event.target.src = missing
-                          event.onerror = null
-                      }}/>
-                </div>
-            </NavLink>
-            <Card.Body>
-            <NavLink to={`/livro/${livro.id}`}>
-                <Card.Title  className={Styles.cardTitle}>{title}</Card.Title>
-            </NavLink>
-                <Card.Text>
-                    <ul className={Styles.cardUl}>
-                        {autores.map(autor => {
-                            return (<li>{autor}</li>)
-                        })}
-                    </ul>
-                </Card.Text>
-            </Card.Body>
+            <div className={Styles.click}>
+                    <div className={Styles.img}>
+                        <Card.Img className={Styles.cardImg} src={thumbnail}
+                                  onError={event => {
+                                      event.target.src = missing
+                                      event.onerror = null
+                                  }}/>
+                    </div>
+                <Card.Body className={Styles.cardBody}>
+                <NavLink to={`/livro/${livro.id}`}>
+                    <Card.Title  className={Styles.cardTitle}>{title}</Card.Title>
+                </NavLink>
+                    <Card.Text>
+                        <ul className={Styles.cardUl}>
+                            {autores.map(autor => {
+                                return (<li>{autor}</li>)
+                            })}
+                        </ul>
+                    </Card.Text>
+                </Card.Body>
 
-            <div className={Styles.cardInfo}>
-                <img src={estrelas} className={Styles.cardStars} width={"150px"}/>
-                <p className={Styles.cardPrice} style={{margin:"0"}}>{preco} €</p>
+                <div className={Styles.cardInfo}>
+                    <img src={estrelas} className={Styles.cardStars} width={"150px"}/>
+                    <p className={Styles.cardPrice} style={{margin:"0"}}>{preco} {preco!=="Indisponível"? "€":""}</p>
+                </div>
             </div>
+            </NavLink>
             {preco !== "Indisponível" ? (
                 <Button variant="warning" className={Styles.cardButton} onClick={() => addToCart(livro.id)}>
                 <img src={basket} alt="" width={25}/>

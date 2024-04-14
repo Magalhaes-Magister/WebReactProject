@@ -12,7 +12,6 @@ function Pagina_Principal() {
   return (
     <>
         <Pesquisa />
-        <Book livro={BOOKS[1]}/>
         <Carrousel/>
         <House />
         <Footer />

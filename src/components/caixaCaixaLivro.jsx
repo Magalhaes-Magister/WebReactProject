@@ -35,7 +35,7 @@ export default function CaixaCaixaLivro({ start, end, scoreFiltro, input, catego
   const books_mostrar = BooksFiltrados.slice(start - 1, end);
   console.log(books_mostrar);
   return (
-    <Row lg={4} className="caixa_grande">
+    <Row className="caixa_grande">
       {books_mostrar.map((b, index) => (
         <Book key={index} livro={b} />
       ))}
