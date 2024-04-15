@@ -1,12 +1,14 @@
-import React from 'react';
-import './ordenar.css';
+import React, { useState } from 'react';
+import './Filtro.css';
+import Escolha from './Escolha';
 
-function ordenar({ setOrderSelecionada }) {
+function Ordenar({ setOrderSelecionada }) {
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
     const handleOrderSelecionada = (order) => {
         setOrderSelecionada(order);
+        setSelectedFilter(`Preço: ${order}`);
     };
-
 
     return (
         <div className="filtro">
@@ -29,8 +31,9 @@ function ordenar({ setOrderSelecionada }) {
                     </div>
                 </div>
             </div>
+            {selectedFilter && <Escolha selectedFilter={selectedFilter} />} 
         </div>
     );
 }
 
-export default ordenar;
+export default Ordenar;

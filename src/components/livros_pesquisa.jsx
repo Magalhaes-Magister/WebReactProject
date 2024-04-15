@@ -12,7 +12,8 @@ function LivrosPesquisados({ InputCategoria, categoriaSelecionada }) {
     const [scoreFiltro, setscoreFiltro] = useState({ min: 0, max: 5 });
     const [priceFiltro, setpriceFiltro] = useState({ min: 0, max: 30 });
     const [OrderSelecionada, setOrderSelecionada] = useState(null);
-
+    console.log(Input);
+    console.log(Categoria);
 
     CalculoStartEndIndex();
     CalculoStartEndLivro();

@@ -1,17 +1,20 @@
-.Pesquisa{
+.Pesquisa {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    background-color: #f5f5f5; /* Cinza claro */
 }
 
 .Livros_pesquisados {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    background-color: #f5f5f5; /* Cinza claro */
 }
 
-.Filtro{
+.Filtro {
     display: flex;
     justify-content: right;
     margin-top: 20px;
+    background-color: #f5f5f5; /* Cinza claro */
 }

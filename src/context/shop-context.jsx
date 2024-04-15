@@ -1,5 +1,5 @@
-import React, {createContext, useState} from 'react'
-import {BOOKS} from "../books.js";
+import React, { createContext, useEffect, useState } from 'react';
+import { BOOKS } from "../books.js";
 
 export const ShopContext = createContext(null);
 
@@ -10,10 +10,12 @@ export const ShopContextProvider = (props) => {
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
     const [last, setLast] = useState(5);
-    const booksPerPage = 10; 
+    const booksPerPage = 10;
     const totalPaginas = Math.ceil(totalBooks / booksPerPage);
     const [Pagina_Atual, setPagina_Atual] = useState(1);
     const [clickedNumber, setClickedNumber] = useState('');
+    const [categoria, setCategoria] = useState('titulo');
+    const [inputValue, setInputValue] = useState('');
 
     const updatePage = (newStart, newEnd) => {
         setStart(newStart);
@@ -30,18 +32,17 @@ export const ShopContextProvider = (props) => {
         setClickedNumber(number);
     };
 
-    const handleNextClick = () => { 
+    const handleNextClick = () => {
         const nextStart = end + 1;
         const nextEnd = Math.min(end + 5, totalPaginas);
         setStart(nextStart);
         setEnd(nextEnd);
         if (Pagina_Atual < totalPaginas)
             setPagina_Atual((prevPage) => prevPage + 1);
-        else { 
+        else {
             setPagina_Atual(totalPaginas);
         }
     };
-    
 
     const handlePrimeiraPagina = () => {
         setPagina_Atual(1);
@@ -70,66 +71,79 @@ export const ShopContextProvider = (props) => {
         setTotalBooks(total);
     };
 
-    //separação de funções  
+    const handleCategoriaChange = (event) => {
+        const selectedCategoria = event.target.value;
+        setCategoria(selectedCategoria);
+    };
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+        console.log(event.target.value);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            console.log('Enter key pressed');   
+        }
+    };
 
 
     const numberCartItems = () => {
-      let total = 0;
-      cartItems.forEach((item) => {total += item.quantity});
+        let total = 0;
+        cartItems.forEach((item) => { total += item.quantity });
         return total;
     };
 
     const getTotalCartAmount = () => {
         let total = 0;
         cartItems.forEach((item) => {
-            total += BOOKS.find((book) => book.id === item.id).price * item.quantity
-        })
+            total += BOOKS.find((book) => book.id === item.id).price * item.quantity;
+        });
         return total;
     };
 
     const addToCart = (itemId) => {
         if (cartItems.length === 0 || !cartItems.find((item) => item.id === itemId)) {
-            setCartItems((prevState) => [...prevState, { id: itemId, quantity: 1 }])
+            setCartItems((prevState) => [...prevState, { id: itemId, quantity: 1 }]);
         }
         else {
             setCartItems(cartItems.map((item) => {
                 if (item.id === itemId) {
-                    return { ...item, quantity: item.quantity + 1 }
+                    return { ...item, quantity: item.quantity + 1 };
                 } else {
-                    return item
+                    return item;
                 }
-            }))
+            }));
         }
     };
 
     const removeFromCart = (itemId) => {
         if (cartItems.find((item) => { return item.id === itemId }).quantity <= 1) {
-            setCartItems(cartItems.filter(item => item.id !== itemId))
+            setCartItems(cartItems.filter(item => item.id !== itemId));
         } else {
             setCartItems(cartItems.map((item) => {
                 if (item.id === itemId) {
-                    return { ...item, quantity: item.quantity - 1 }
+                    return { ...item, quantity: item.quantity - 1 };
                 } else {
-                    return item
+                    return item;
                 }
-            }))
+            }));
         }
     };
 
     const updateCartItemCount = (newAmount, itemId) => {
         setCartItems(cartItems.map((item) => {
             if (item.id === itemId) {
-                return { ...item, quantity: newAmount }
+                return { ...item, quantity: newAmount };
             } else {
-                return item
+                return item;
             }
-        }))
-    }
-
-    const deleteCart = () => {
-        setCartItems([])
+        }));
     };
 
+    const deleteCart = () => {
+        setCartItems([]);
+    };
 
     const contextValue = {
         cartItems,
@@ -154,7 +168,12 @@ export const ShopContextProvider = (props) => {
         last,
         updateTotalBooksLength,
         CalculoStartEndLivro,
-        handleNextClick
+        handleNextClick,
+        handleCategoriaChange,
+        handleInputChange,
+        handleKeyPress,
+        categoria,
+        inputValue
     };
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;

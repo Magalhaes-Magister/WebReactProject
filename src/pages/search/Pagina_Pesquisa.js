@@ -1,28 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import './Pagina_Pesquisa.css';
 import Livros_pesquisados from '../../components/livros_pesquisa.jsx';
-import Pesquisa from '../../components/barra_pesquisa.jsx';
+import { ShopContext } from '../../context/shop-context.jsx';
 
 function Pagina_Principal() {
-  const [categoriaSelecionada, setCategoriaSelecionada] = useState('');
-  const handleCategoriaChange = (novaCategoria) => {
-    setCategoriaSelecionada(novaCategoria);
-  };
-  const [InputCategoria, setInputCategoria] = useState('');
-
-
+  const { inputValue, categoria } = useContext(ShopContext);
+  console.log(inputValue);
+  console.log(categoria);
   return (
     <>
       <div className="App">
-        <div className="Pesquisa">
-          <Pesquisa onCategoriaChange={handleCategoriaChange} setInputCategoria={setInputCategoria}/>
-        </div>
-      
       </div>
       <div className="Livros_pesquisados">
-        <Livros_pesquisados InputCategoria={InputCategoria} categoriaSelecionada={categoriaSelecionada} />
+        <Livros_pesquisados InputCategoria={inputValue} categoriaSelecionada={categoria} />
       </div>
-
     </>
   );
 }

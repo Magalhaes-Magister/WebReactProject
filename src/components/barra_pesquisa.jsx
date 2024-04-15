@@ -1,26 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import './barra_pesquisa.css';
+import { ShopContext } from "../context/shop-context";
 
-function Pesquisa({ onCategoriaChange, setInputCategoria }) {
-    const [categoria, setCategoria] = useState('titulo'); 
-    const [inputValue, setInputValue] = useState(''); 
-
-    const handleCategoriaChange = (event) => {
-        const selectedCategoria = event.target.value;
-        setCategoria(selectedCategoria); 
-        onCategoriaChange(selectedCategoria); 
-    };
-
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value); 
-    };
-
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            setInputCategoria(inputValue); 
-        }
-    };
-    console.log(inputValue);
+function Pesquisa() {
+    const { handleCategoriaChange, handleInputChange, categoria, inputValue, handleKeyPress } = useContext(ShopContext);
+    
     return (
         <div id="barra-pesquisa">
             <div className="pesquisa">
