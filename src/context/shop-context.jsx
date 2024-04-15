@@ -42,14 +42,17 @@ export const ShopContextProvider = (props) => {
     };
 
     const updateCartItemCount = (newAmount, itemId) => {
-        setCartItems(cartItems.map((item) => {
-            if (item.id===itemId){
-                return{...item, quantity: newAmount}
-            } else {
-                return item
-            }
-        }))
-    }
+        if(newAmount===0){
+            setCartItems(cartItems.filter(item => item.id !== itemId))
+        } else {
+            setCartItems(cartItems.map((item) => {
+                if (item.id===itemId){
+                    return{...item, quantity: newAmount}
+                } else {
+                    return item
+                }
+            }))
+    }}
 
     const getTotalCartAmount = () => {
         let total = 0;
