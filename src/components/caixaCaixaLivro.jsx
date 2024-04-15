@@ -52,7 +52,7 @@ export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, in
     BooksFiltrados.sort((a, b) => a.price - b.price); 
   }
 
-  let books_mostrar = BooksFiltrados.slice(first - 1, last + 1);
+  let books_mostrar = BooksFiltrados.slice(first - 1, last);
   let a = BooksFiltrados.length;
   updateTotalBooksLength(a);
   console.log(books_mostrar)

@@ -10,7 +10,7 @@ export const ShopContextProvider = (props) => {
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
     const [last, setLast] = useState(5);
-    const booksPerPage = 9; 
+    const booksPerPage = 10; 
     const totalPaginas = Math.ceil(totalBooks / booksPerPage);
     const [Pagina_Atual, setPagina_Atual] = useState(1);
     const [clickedNumber, setClickedNumber] = useState('');
@@ -30,7 +30,7 @@ export const ShopContextProvider = (props) => {
         setClickedNumber(number);
     };
 
-    const handleNextClick = () => { //nao esquecer de parar o next quando chegar no final
+    const handleNextClick = () => { 
         const nextStart = end + 1;
         const nextEnd = Math.min(end + 5, totalPaginas);
         setStart(nextStart);
