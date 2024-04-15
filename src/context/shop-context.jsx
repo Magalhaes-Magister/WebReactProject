@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { BOOKS } from "../books";
+import React, {createContext, useState} from 'react'
+import {BOOKS} from "../books.js";
 
 export const ShopContext = createContext(null);
 
@@ -74,8 +74,8 @@ export const ShopContextProvider = (props) => {
 
 
     const numberCartItems = () => {
-        let total = 0;
-        cartItems.forEach((item) => { total += item.quantity });
+      let total = 0;
+      cartItems.forEach((item) => {total += item.quantity});
         return total;
     };
 
@@ -124,7 +124,7 @@ export const ShopContextProvider = (props) => {
                 return item
             }
         }))
-    };
+    }
 
     const deleteCart = () => {
         setCartItems([])

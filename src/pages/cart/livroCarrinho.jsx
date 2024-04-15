@@ -18,6 +18,7 @@ export default function LivroCarrinho({livro}){
                         <input value={cartItems.find((item) => { return item.id === id}).quantity}
                                 onChange={(n) => updateCartItemCount(Number(n.target.value), id)}/>
                         <button onClick={() => addToCart(id)}>+</button>
+                        <p>{livro.price}</p>
                     </div>
                 </div>
             </div>

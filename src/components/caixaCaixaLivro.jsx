@@ -3,6 +3,8 @@ import './caixaCaixaLivroStyle.css';
 import CaixaLivro from './caixaLivro';
 import { ShopContext } from '../context/shop-context';
 import db from '../db.json';
+import Book from "./book";
+import Row from 'react-bootstrap/Row'
 
 export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, input, categoriaSelecionada }) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
@@ -57,10 +59,10 @@ export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, in
   updateTotalBooksLength(a);
   console.log(books_mostrar)
   return (
-    <div className="caixa_grande">
+    <Row className="caixa_grande">
       {books_mostrar.map((b, index) => (
-        <CaixaLivro key={index} livro={b} />
+        <Book key={index} livro={b} />
       ))}
-    </div>
+    </Row>
   );
 }
