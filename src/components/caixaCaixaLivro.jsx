@@ -1,15 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './caixaCaixaLivroStyle.css';
-import CaixaLivro from './caixaLivro';
 import { ShopContext } from '../context/shop-context';
 import db from '../db.json';
 import Book from "./book";
 import Row from 'react-bootstrap/Row'
 
-export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, input, categoriaSelecionada }) {
+export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue}) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
   const [books, setBooks] = useState([]);
-
+  
   useEffect(() => {
     setBooks([...db.books]);
   }, []);
@@ -21,6 +20,7 @@ export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, in
       return book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
     });
   }
+  
 
   if (categoriaSelecionada === 'autor' && input && input.length > 0) {
     BooksFiltrados = BooksFiltrados.filter(book => {

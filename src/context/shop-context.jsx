@@ -16,6 +16,11 @@ export const ShopContextProvider = (props) => {
     const [clickedNumber, setClickedNumber] = useState('');
     const [categoria, setCategoria] = useState('titulo');
     const [inputValue, setInputValue] = useState('');
+    const [scoreFiltro, setscoreFiltro] = useState({ min: 0, max: 5 });
+    const [priceFiltro, setpriceFiltro] = useState({ min: 0, max: 30 });
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [categoriaValue, setCategoriaValue] = useState('');
+    const [autorValue, setAutorValue] = useState('');
 
     const updatePage = (newStart, newEnd) => {
         setStart(newStart);
@@ -85,6 +90,28 @@ export const ShopContextProvider = (props) => {
         if (event.key === 'Enter') {
             console.log('Enter key pressed');   
         }
+    };
+
+    const handleScoreFiltro = (min, max) => {
+        setscoreFiltro({ min, max });
+        setSelectedOption(`Ranking: ${min}-${max}`);
+    };
+
+    const handlePriceFiltro = (min, max) => {
+        setpriceFiltro({ min, max });
+        setSelectedOption(`Preço: ${min}-${max}`);
+    };
+
+    const handleAutorChange = (event) => {
+        setAutorValue(event); 
+        setCategoria('autor');
+        setSelectedOption(`Autor: ${event}`);
+    };
+
+    const handleCategoriasChange = (event) => {
+        setCategoriaValue(event);
+        setCategoria('categoria');
+        setSelectedOption(`Categoria: ${event}`);
     };
 
 
@@ -173,7 +200,20 @@ export const ShopContextProvider = (props) => {
         handleInputChange,
         handleKeyPress,
         categoria,
-        inputValue
+        inputValue,
+        scoreFiltro,
+        setscoreFiltro,
+        priceFiltro,
+        setpriceFiltro,
+        handleScoreFiltro,
+        handlePriceFiltro,
+        handleAutorChange,
+        handleCategoriasChange,
+        selectedOption,
+        categoriaValue,
+        autorValue,
+        
+
     };
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;

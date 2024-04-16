@@ -1,6 +1,6 @@
 #barra {
   list-style-type: none;
-  padding: 0;
+  padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,8 @@
 #barra li {
   cursor: pointer;
   margin: 0 5px;
-  padding: 5px 10px;
+  padding: 5px 20px; 
+  font-size: 16px; 
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: background-color 0.3s;

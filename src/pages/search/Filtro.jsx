@@ -1,33 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import './Filtro.css';
 import Escolha from './Escolha'; 
 import db from '../../db.json';
+import { ShopContext } from '../../context/shop-context';
 
-function Filtro({ setscoreFiltro, setpriceFiltro }) {
-    const [selectedFilter, setSelectedFilter] = useState(null);
-    const [inputValue, setInputValue] = useState(''); 
-    const [categoria, setCategoria] = useState('autor');
+function Filtro({}) {
 
-    const handleScoreFiltro = (min, max) => {
-        setscoreFiltro({ min, max });
-        setSelectedFilter(`Ranking: ${min}-${max}`);
-    };
-
-    const handlePriceFiltro = (min, max) => {
-        setpriceFiltro({ min, max });
-        setSelectedFilter(`Preço: ${min}-${max}`);
-    };
-
-    const handleAutorChange = (event) => {
-        setInputValue(event); 
-        setSelectedFilter(`Autor: ${event}`);
-    };
-
-    const handleCategoriaChange = (event) => {
-        setCategoria(event);
-        setSelectedFilter(`Categoria: ${event}`);
-    };
-
+    const {handleAutorChange, handleCategoriasChange, handlePriceFiltro, handleScoreFiltro, selectedOption} = useContext(ShopContext);
 
     const autores = db.books.reduce((acc, book) => {
         book.authors.forEach((autor) => {
@@ -38,26 +17,26 @@ function Filtro({ setscoreFiltro, setpriceFiltro }) {
         return acc;
     }, []);
 
-    const categorias = db.books.reduce((acc, book) => {
-            book.categories.forEach((categoria) => {
-                if (!acc.includes(categoria)) {
-                    acc.push(categoria);
-                }
-            });
-            return acc;
-        }, []);
-
+    const categoriasList = db.books.reduce((acc, book) => {
+        book.categories.forEach((categoria) => {
+            if (!acc.includes(categoria)) {
+                acc.push(categoria);
+            }
+        });
+        return acc;
+    }, []);
+        
     return (
         <div className="filtro">
-            <Escolha selectedFilter={selectedFilter} /> 
+            <Escolha selectedFilter={selectedOption} /> 
             <div className="Botao_filtro">
                 <button className="Botao_Principal">Filtros</button>
                 <div className="Botao_drop">
                     <div className="Botao_segundario">
                         <a href="#">Categoria</a>
                         <div className="Botao_segundario_conteudo">
-                            {categorias.map((categoria, index) => (
-                                <a key={index} href="#" onClick={() => handleCategoriaChange(categoria)}>{categoria}</a>
+                            {categoriasList.map((categoria, index) => (
+                                <a key={`categoria_${index}`} href="#" onClick={() => handleCategoriasChange(categoria)}>{categoria}</a>
                             ))}
                         </div>
                     </div>
@@ -65,7 +44,7 @@ function Filtro({ setscoreFiltro, setpriceFiltro }) {
                         <a href="#">Autor</a>
                         <div className="Botao_segundario_conteudo">
                             {autores.map((autor, index) => (
-                                <a key={index} href="#" onClick={() => handleAutorChange(autor)}>{autor}</a>
+                                <a key={`autor_${index}`} href="#" onClick={() => handleAutorChange(autor)}>{autor}</a>
                             ))}
                         </div>
                     </div>
