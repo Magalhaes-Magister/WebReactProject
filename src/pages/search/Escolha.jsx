@@ -1,15 +1,16 @@
 import React from 'react';
 import './escolha.css';
 
-function Escolha({ selectedFilter, onReverterEscolha }) {
+function Escolha({ selectedOptions, handleReverterEscolha }) {
+    console.log(selectedOptions);
     return (
         <div>
-            {selectedFilter && (
-                <div className="escolha-container">
-                    <p>{selectedFilter}</p>
-                    <button onClick={onReverterEscolha}>x</button>
+            {selectedOptions && Object.keys(selectedOptions).map((key) => (
+                <div key={key} className="escolha-container">
+                    <p>{selectedOptions[key]}</p>
+                    <button onClick={() => handleReverterEscolha(key)}>x</button>
                 </div>
-            )}
+            ))}
         </div>
     );
 }

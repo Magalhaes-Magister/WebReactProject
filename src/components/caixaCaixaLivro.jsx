@@ -5,7 +5,7 @@ import db from '../db.json';
 import Book from "./book";
 import Row from 'react-bootstrap/Row'
 
-export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue}) {
+export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue}) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
   const [books, setBooks] = useState([]);
   
@@ -15,12 +15,34 @@ export default function CaixaCaixaLivro({ scoreFiltro,price,OrderSelecionada, in
 
   let BooksFiltrados = [...books];
 
+  BooksFiltrados = BooksFiltrados.map(book => ({ //como havia preços nulos tive de pedir para ele considerar 0
+    ...book,
+    price: typeof book.price === 'number' ? book.price : 0
+}));
+
   if (scoreFiltro && scoreFiltro.min !== undefined && scoreFiltro.max !== undefined) {
     BooksFiltrados = BooksFiltrados.filter(book => {
       return book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
     });
   }
   
+  if (priceFiltro && priceFiltro.min !== undefined && priceFiltro.max !== undefined) {
+    BooksFiltrados = BooksFiltrados.filter(book => {
+        return book.price >= priceFiltro.min && book.price <= priceFiltro.max;
+    });
+}
+
+  if (autorValue && autorValue.length > 0) {
+    BooksFiltrados = BooksFiltrados.filter(book => {
+      return book.authors.includes(autorValue);
+    });
+  }
+
+  if (categoriaValue && categoriaValue.length > 0) {
+    BooksFiltrados = BooksFiltrados.filter(book => {
+      return book.categories.some(category => category.toLowerCase().includes(categoriaValue.toLowerCase()));
+    });
+  }
 
   if (categoriaSelecionada === 'autor' && input && input.length > 0) {
     BooksFiltrados = BooksFiltrados.filter(book => {

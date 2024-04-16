@@ -8,7 +8,7 @@
     border-radius: 5px;
     display: flex;
     cursor: pointer;
-    border: 1px solid #ccc; /* Adicionando uma borda cinza */
+    border: 1px solid #ccc; 
 }
 
 .Botao_filtro {

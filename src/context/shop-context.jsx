@@ -16,9 +16,11 @@ export const ShopContextProvider = (props) => {
     const [clickedNumber, setClickedNumber] = useState('');
     const [categoria, setCategoria] = useState('titulo');
     const [inputValue, setInputValue] = useState('');
+    const [orderSelecionada, setOrderSelecionada] = useState('');
+    const [value, setValue] = useState('');
     const [scoreFiltro, setscoreFiltro] = useState({ min: 0, max: 5 });
-    const [priceFiltro, setpriceFiltro] = useState({ min: 0, max: 30 });
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [priceFiltro, setpriceFiltro] = useState({ min: 0, max: 10000});
+    const [selectedOptions, setSelectedOptions] = useState({});
     const [categoriaValue, setCategoriaValue] = useState('');
     const [autorValue, setAutorValue] = useState('');
 
@@ -75,6 +77,36 @@ export const ShopContextProvider = (props) => {
     const updateTotalBooksLength = (total) => {
         setTotalBooks(total);
     };
+    
+    const handleReverterEscolha = (key) => {
+        setSelectedOptions(prevOptions => {
+            const updatedOptions = { ...prevOptions };
+            delete updatedOptions[key];
+            if (key === 'autor') {
+                setAutorValue('');
+            } else if (key === 'categoria') {
+                setCategoriaValue('');
+            } else if (key === 'price') {
+                setpriceFiltro({ min: 0, max: 10000 });
+            }
+            else if (key === 'ranking') {
+                setscoreFiltro({ min: 0, max: 5 });
+            } else if (key === 'price') {
+                setOrderSelecionada('');
+            } else if (key === 'ranking') {
+                setOrderSelecionada('');
+            }
+            return updatedOptions;
+        });
+    };
+    
+    
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            const inputValue = event.target.value;
+            setInputValue(inputValue);
+        }
+    };
 
     const handleCategoriaChange = (event) => {
         const selectedCategoria = event.target.value;
@@ -82,36 +114,60 @@ export const ShopContextProvider = (props) => {
     };
 
     const handleInputChange = (event) => {
-        setInputValue(event.target.value);
+        setValue(event.target.value);
         console.log(event.target.value);
     };
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            console.log('Enter key pressed');   
-        }
+
+    const handleOrderSelecionadaPreco = (order) => {
+        setOrderSelecionada(order);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            price: `Preço: ${order}`
+        }));
     };
+    
+    const handleOrderSelecionadaRanking = (order) => {
+        setOrderSelecionada(order);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            ranking: `Ranking: ${order}`
+        }));
+    };  
+    
 
     const handleScoreFiltro = (min, max) => {
         setscoreFiltro({ min, max });
-        setSelectedOption(`Ranking: ${min}-${max}`);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            ranking: `Ranking: ${min}-${max}`
+        }));
     };
 
     const handlePriceFiltro = (min, max) => {
         setpriceFiltro({ min, max });
-        setSelectedOption(`Preço: ${min}-${max}`);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            price: `Preço: ${min}-${max}`
+        }));
     };
 
     const handleAutorChange = (event) => {
         setAutorValue(event); 
         setCategoria('autor');
-        setSelectedOption(`Autor: ${event}`);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            autor: `Autor: ${event}`
+        }));
     };
 
     const handleCategoriasChange = (event) => {
         setCategoriaValue(event);
         setCategoria('categoria');
-        setSelectedOption(`Categoria: ${event}`);
+        setSelectedOptions(prevOptions => ({
+            ...prevOptions,
+            categoria: `Categoria: ${event}`
+        }));
     };
 
 
@@ -209,11 +265,16 @@ export const ShopContextProvider = (props) => {
         handlePriceFiltro,
         handleAutorChange,
         handleCategoriasChange,
-        selectedOption,
+        selectedOptions,
+        setSelectedOptions,
         categoriaValue,
         autorValue,
-        
-
+        value,
+        orderSelecionada,
+        setOrderSelecionada,
+        handleOrderSelecionadaPreco,
+        handleOrderSelecionadaRanking,
+        handleReverterEscolha,
     };
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;

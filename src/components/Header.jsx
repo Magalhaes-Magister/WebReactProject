@@ -1,33 +1,43 @@
 import React from 'react';
-import './Header.css'; 
+import { Navbar, Nav } from 'react-bootstrap';
 import logo from '../images/book_logo.png';
 import shoppingCar from '../images/car_logo.png';
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ShopContext } from "../context/shop-context";
 import Pesquisa from './barra_pesquisa'; 
+import './Header.css';
+
 function Header() {
     const { numberCartItems } = useContext(ShopContext);
     const cartCount = numberCartItems();
+
     return (
-        <header className="header">
-            <Link id="logo" to="/">
-                <img src={logo} alt="BookStore" style={{ width: '100px', height: '100px', background: 'none' }} />
-                <div id="titulo">
-                    <h1 style={{ color: 'black' }}>BookStore</h1>
-                </div>
-            </Link>
-            <Pesquisa /> 
-            <Link to="/livro">Livros</Link>
-            <Link id="menu" to="/carrinho">
-                <ul>
-                    <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
-                    {cartCount > 0 ? (
-                        <span className="cart-count" style={{ borderRadius: '50%', backgroundColor: 'black', color: 'rgb(239, 188, 155)', padding: '8px' }}>{cartCount}</span>
-                    ) : (<></>)}
-                </ul>
-            </Link>
-        </header>
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand>
+                <Link id="logo" to="/">
+                    <img src={logo} alt="BookStore" style={{ width: '100px', height: '100px', background: 'none' }} />
+                    <div id="titulo">
+                        <h1>BookStore</h1>
+                    </div>
+                </Link>
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link as={Link} to="/livro">Livros</Nav.Link>
+                </Nav>
+                <Pesquisa />
+                <Nav>
+                    <Nav.Link as={Link} to="/carrinho">
+                        <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
+                        {cartCount > 0 ? (
+                            <span className="cart-count">{cartCount}</span>
+                        ) : (<></>)}
+                    </Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 }
 

@@ -4,7 +4,7 @@ import Livros_pesquisados from '../../components/livros_pesquisa.jsx';
 import { ShopContext } from '../../context/shop-context.jsx';
 
 function Pagina_Principal() {
-  const { inputValue, categoria, priceFiltro, scoreFiltro, setOrderSelecionada, autorValue, categoriaValue } = useContext(ShopContext);
+  const { inputValue, categoria, priceFiltro, scoreFiltro, orderSelecionada, autorValue, categoriaValue } = useContext(ShopContext);
   console.log(inputValue);
   console.log(categoria);
   return (
@@ -12,7 +12,7 @@ function Pagina_Principal() {
       <div className="App">
       </div>
       <div className="Livros_pesquisados">
-        <Livros_pesquisados InputCategoria={inputValue} categoriaSelecionada={categoria} priceFiltro={priceFiltro} scoreFiltro={scoreFiltro} setOrderSelecionada={setOrderSelecionada} autorValue={autorValue} categoriaValue={categoriaValue}/>
+        <Livros_pesquisados InputCategoria={inputValue} categoriaSelecionada={categoria} priceFiltro={priceFiltro} scoreFiltro={scoreFiltro} orderSelecionada={orderSelecionada} autorValue={autorValue} categoriaValue={categoriaValue}/>
       </div>
     </>
   );

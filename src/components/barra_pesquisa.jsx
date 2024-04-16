@@ -3,7 +3,7 @@ import './barra_pesquisa.css';
 import { ShopContext } from "../context/shop-context";
 
 function Pesquisa() {
-    const { handleCategoriaChange, handleInputChange, categoria, inputValue, handleKeyPress } = useContext(ShopContext);
+    const { handleCategoriaChange, handleInputChange, categoria, inputValue, value, handleKeyPress } = useContext(ShopContext);
     
     return (
         <div id="barra-pesquisa">
@@ -14,7 +14,7 @@ function Pesquisa() {
                 <input 
                     type="text" 
                     placeholder="Input" 
-                    value={inputValue} 
+                    value={value} 
                     onChange={handleInputChange} 
                     onKeyDown={handleKeyPress}
                 />
