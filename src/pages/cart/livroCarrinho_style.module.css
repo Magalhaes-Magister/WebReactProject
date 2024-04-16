@@ -1,0 +1,47 @@
+.caixaCa{
+    display: grid;
+    grid-template-columns: 20% auto auto auto auto auto auto;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 10px;
+    width: inherit;
+}
+.infoCa{
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    grid-column: 2/7;
+    width: 100%;
+}
+.divImg{
+    grid-column: 1/2;
+    display: flex;
+}
+.cartImg{
+    width: 100%;
+    object-fit: cover;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+.footer{
+    display: flex;
+    grid-column: 1/7;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.numCa{
+    display: flex;
+    align-items: stretch;
+}
+.price{
+    color: red;
+    font-weight: bold;
+    font-size: 1.5em;
+}
