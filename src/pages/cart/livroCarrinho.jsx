@@ -3,22 +3,28 @@ import {useContext} from 'react'
 import {ShopContext} from "../../context/shop-context";
 import style from './livroCarrinho_style.module.css'
 import Button from "react-bootstrap/Button";
+import missing from "../../images/missing_img.png";
 
 export default function LivroCarrinho({livro}){
-    const { id, title, thumbnailUrl } = livro;
+    const { id, title, thumbnailUrl, price } = livro;
     const {cartItems, addToCart, removeFromCart, updateCartItemCount} = useContext(ShopContext);
+    let thumbnail = thumbnailUrl || missing;
 
     return(
         <>
             <div className={style.caixaCa}>
 
                 <div className={style.divImg}>
-                    <img className={style.cartImg} src={thumbnailUrl} />
+                    <img className={style.cartImg} src={thumbnail}
+                         onError={event => {
+                             event.target.src = missing
+                             event.onerror = null
+                         }}/>
                 </div>
 
                 <div className={style.infoCa}>
                     <strong>{title}</strong>
-                    <p className={style.price}>{livro.price}€</p>
+                    <p className={style.price}>{price}€</p>
                 </div>
 
                 <div className={style.footer}>
