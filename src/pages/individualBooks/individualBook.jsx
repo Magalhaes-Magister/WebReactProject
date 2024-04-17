@@ -9,7 +9,6 @@ import star_3 from "../../images/3_stars.png";
 import star_4 from "../../images/4_stars.png";
 import star_5 from "../../images/5_stars.png";
 import missing from "../../images/missing_img.png";
-import Styles from "../../components/book_style.module.css";
 import basket from "../../images/basket.png";
 import {ShopContext} from "../../context/shop-context";
 
@@ -27,7 +26,7 @@ function formatDate(date) {
 
 export const IndividualBook = () => {
     const { livroId } = useParams();
-    const {thumbnailUrl, longDescription, title, authors, publishedDate, categories, pageCount, score, price, isbn, status}
+    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn}
         = BOOKS.find((item) => { return item.id === livroId});
     const {addToCart} = useContext(ShopContext);
     let preco = price || "Indisponível";

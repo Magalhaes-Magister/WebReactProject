@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import db from '../db.json';
+import db from '../../db.json';
 import CaixaCaixaLivro from './caixaCaixaLivro';
-import Filtro from '../pages/search/Filtro';
-import BarraNumero from '../pages/search/barra_numero'; 
+import Filtro from './Filtro';
+import BarraNumero from './barra_numero';
 
 function LivrosPesquisados(InputCategoria) { 
   const totalBooks = db.books.length;

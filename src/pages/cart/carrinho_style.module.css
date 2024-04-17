@@ -1,10 +1,9 @@
 .cart{
     margin: auto;
     width: 80%;
+    min-height: 66.2vh;
 }
-body{
-    background-color: #f4f2ee;
-}
+
 .cartTitle{
     margin:auto;
     font-weight: bold;
@@ -12,10 +11,10 @@ body{
 }
 .cartWrapper{
     display: grid;
-    grid-template-columns: 10px repeat(5, auto);
+    grid-template-columns: 10px repeat(10, minmax(100px, auto));
 }
 .cartItems{
-    grid-column: 2/7;
+    grid-column: 2/8;
 }
 .cartSide{
     grid-column: 8/12;
@@ -24,7 +23,8 @@ body{
     position: -webkit-sticky;
     position: sticky;
     top: 150px;
-    width: 60%;
+    width: 80%;
+    margin-left: 50px;
 }
 .total{
     display: flex;
@@ -46,4 +46,6 @@ body{
     padding: 20px;
     border-radius: 10px;
 }
-@media screen and (max-width: 900px) {  .cartWrapper {display: flex; flex-direction: column;}}
+@media screen and (max-width: 1150px) {
+    .cartWrapper {display: flex; flex-direction: column;}
+    .cartButtons {margin: auto; max-width: 60%}}

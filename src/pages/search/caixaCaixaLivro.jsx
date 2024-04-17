@@ -1,7 +1,6 @@
 import React from 'react';
 import './caixaCaixaLivroStyle.css';
-import CaixaLivro from './caixaLivro';
-import db from '../db.json';
+import db from '../../db.json';
 import Book from "./book";
 import Row from 'react-bootstrap/Row'
 

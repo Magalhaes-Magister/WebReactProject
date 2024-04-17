@@ -1,6 +1,6 @@
 .caixaCa{
     display: grid;
-    grid-template-columns: 20% auto auto auto auto auto auto;
+    grid-template-columns: 20% auto auto auto auto auto;
     padding: 15px;
     border-radius: 10px;
     background-color: white;
@@ -17,6 +17,7 @@
 .divImg{
     grid-column: 1/2;
     display: flex;
+    height: 100%;
 }
 .cartImg{
     width: 100%;

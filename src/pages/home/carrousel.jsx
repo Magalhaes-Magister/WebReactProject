@@ -1,4 +1,3 @@
-import CaixaLivro from "../../components/caixaLivro";
 import React from 'react'
 import {BOOKS} from "../../books";
 import "./carrousel_style.css";

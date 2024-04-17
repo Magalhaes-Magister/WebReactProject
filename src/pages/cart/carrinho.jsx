@@ -27,7 +27,7 @@ export default function Carrinho() {
                 </div>): ( <h2 className={style.vazio}>O Carrinho está vazio</h2>)}
 
                 <div className={style.cartSide}>
-                    <div className={style.cartButtons} style={{marginLeft: "50px"}}>
+                    <div className={style.cartButtons}>
 
                         <div className={style.total}>
                             <strong style={{fontSize: "2em"}}>Total:</strong>
@@ -36,7 +36,7 @@ export default function Carrinho() {
 
                         <Button variant={"warning"} className={style.buttonBuy}>Checkout</Button>
                         <div className={style.buttonsAd}>
-                            <Button onClick={() => navigate("/")}>Continuar a comprar</Button>
+                            <Button onClick={() => navigate("/livro")}>Continuar a comprar</Button>
                             <Button variant={"outline-danger"} onClick={() => deleteCart()}>Delete Cart</Button>
                         </div>
 
