@@ -7,7 +7,8 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Header from './components/Header.jsx'
 import {ShopContextProvider} from "./context/shop-context";
 import './index.css';
-import Footer from './components/Footer.jsx';
+import Footer from "./components/Footer";
+import './App.css'
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
                         <Route path="/carrinho" element={<Carrinho />}/>
                         <Route path="/livro/:livroId" element={<IndividualBook />}/>
                     </Routes>
-                    <Footer />
+                <Footer />
             </Router>
         </ShopContextProvider>
     </>

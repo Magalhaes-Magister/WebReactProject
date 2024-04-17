@@ -1,22 +1,22 @@
 import Card from 'react-bootstrap/Card'
 import Button from "react-bootstrap/Button";
 import React, {useContext} from 'react'
-import {Link, NavLink} from "react-router-dom";
-import star_1 from "../images/1_stars.png";
-import star_2 from "../images/2_stars.png";
-import star_3 from "../images/3_stars.png";
-import star_4 from "../images/4_stars.png";
-import star_5 from "../images/5_stars.png";
-import missing from '../images/missing_img.png'
-import basket from '../images/basket.png'
+import {NavLink} from "react-router-dom";
+import star_1 from "../../images/1_stars.png";
+import star_2 from "../../images/2_stars.png";
+import star_3 from "../../images/3_stars.png";
+import star_4 from "../../images/4_stars.png";
+import star_5 from "../../images/5_stars.png";
+import missing from '../../images/missing_img.png'
+import basket from '../../images/basket.png'
 import 'bootstrap/dist/css/bootstrap.css';
 import Styles from './book_style.module.css';
-import {ShopContext} from "../context/shop-context";
+import {ShopContext} from "../../context/shop-context";
 
 
 export default function Book({livro}) {
     const {addToCart} = useContext(ShopContext);
-    const {thumbnailUrl, title, authors, price, score} = livro;
+    const {thumbnailUrl, title, authors, price} = livro;
     let autores = authors || [];
     let preco = price || "Indisponível";
     let thumbnail = thumbnailUrl || missing;

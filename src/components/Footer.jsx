@@ -10,7 +10,7 @@ function Footer() {
                 <div className="footer-meio">
                     <div id="titulo">
                       <img src={logo} alt="BookStore" />
-                        <h1>BookStore</h1>   
+                        <h1>BookStore</h1>
                     </div>
                 </div>
                 <div className="footer-meio">

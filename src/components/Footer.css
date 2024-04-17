@@ -1,7 +1,10 @@
 .footer {
     width: 100%;
+    margin-top: 20px;
+    bottom: 0;
     background-color: rgb(33, 95, 154);
     padding: 40px 0;
+    padding: 10px;
 }
 
 .footer-container {
@@ -24,7 +27,7 @@
 .footer-meio h2 {
     font-size: 20px;
     margin-bottom: 20px;
-    color: black; 
+    color: black;
 }
 
 .footer-meio ul li a {

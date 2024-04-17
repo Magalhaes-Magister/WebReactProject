@@ -23,7 +23,7 @@ export default function LivroCarrinho({livro}){
                 </div>
 
                 <div className={style.infoCa}>
-                    <strong>{title}</strong>
+                    <strong style={{fontSize: "1.2em"}}>{title}</strong>
                     <p className={style.price}>{price}€</p>
                 </div>
 

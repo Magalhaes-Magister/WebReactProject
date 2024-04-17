@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './caixaCaixaLivroStyle.css';
+import db from '../../db.json';
 import { ShopContext } from '../context/shop-context';
 import db from '../db.json';
 import Book from "./book";
@@ -8,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue}) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
   const [books, setBooks] = useState([]);
-  
+
   useEffect(() => {
     setBooks([...db.books]);
   }, []);
@@ -25,7 +26,7 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
       return book.score >= scoreFiltro.min && book.score <= scoreFiltro.max;
     });
   }
-  
+
   if (priceFiltro && priceFiltro.min !== undefined && priceFiltro.max !== undefined) {
     BooksFiltrados = BooksFiltrados.filter(book => {
         return book.price >= priceFiltro.min && book.price <= priceFiltro.max;
@@ -63,17 +64,17 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
     });
   }
 
-  
+
   if (OrderSelecionada === 'maiorScore') {
-    BooksFiltrados.sort((a, b) => b.score - a.score); 
+    BooksFiltrados.sort((a, b) => b.score - a.score);
   } else if (OrderSelecionada === 'menorScore') {
-    BooksFiltrados.sort((a, b) => a.score - b.score); 
+    BooksFiltrados.sort((a, b) => a.score - b.score);
   }
 
   if (OrderSelecionada === 'maiorPrice') {
-    BooksFiltrados.sort((a, b) => b.price - a.price); 
+    BooksFiltrados.sort((a, b) => b.price - a.price);
   } else if (OrderSelecionada === 'menorPrice') {
-    BooksFiltrados.sort((a, b) => a.price - b.price); 
+    BooksFiltrados.sort((a, b) => a.price - b.price);
   }
 
   let books_mostrar = BooksFiltrados.slice(first - 1, last);
