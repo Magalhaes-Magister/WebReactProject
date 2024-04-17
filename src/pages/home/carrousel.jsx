@@ -51,8 +51,7 @@ function Carrousel() {
                         <Card>
                             <Card.Img className="img" variant="top" src={item.thumbnailUrl}/>
                             <Card.Body>
-                                <Card.Title>{item.title}</Card.Title>
-                                <Card.Text className="body">{item.shortDescription}</Card.Text>
+                                <Card.Title style={{fontWeight: "bold"}}>{item.title}</Card.Title>
                             </Card.Body>
                         </Card>
                     </Link>

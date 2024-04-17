@@ -9,6 +9,7 @@
 .slider-container {
     width: 80%;
     margin: auto;
+    margin-bottom: 40px;
 }
 
 /* Styles for the previous and next buttons */
@@ -40,11 +41,15 @@
     align-items: center;
     align-content: center;
     flex-direction: column;
-    height: 500px;
+    height: 350px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.slider-container .card-text:last-child {
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* Style for each slide */
 .slider-container .slick-slide > div {

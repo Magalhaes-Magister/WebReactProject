@@ -1,0 +1,10 @@
+.mainTitle{
+    color: white;
+    font-weight: bold;
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+}
+.box{
+    height: 150px;
+}
