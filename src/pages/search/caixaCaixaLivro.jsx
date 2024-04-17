@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './caixaCaixaLivroStyle.css';
 import db from '../../db.json';
-import { ShopContext } from '../context/shop-context';
-import db from '../db.json';
+import { ShopContext } from '../../context/shop-context';
 import Book from "./book";
 import Row from 'react-bootstrap/Row'
 

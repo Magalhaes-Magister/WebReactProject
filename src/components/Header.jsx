@@ -18,7 +18,7 @@ function Header() {
                 <Link id="logo" to="/">
                     <img src={logo} alt="BookStore" style={{ width: '100px', height: '100px', background: 'none' }} />
                     <div id="titulo">
-                        <h1>BookStore</h1>
+                        <h1 className={"h1"}>BookStore</h1>
                     </div>
                 </Link>
             </Navbar.Brand>

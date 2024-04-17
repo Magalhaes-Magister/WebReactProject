@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import './Pagina_Pesquisa.css';
-import Livros_pesquisados from '../../components/livros_pesquisa.jsx';
+import Livros_pesquisados from '../search/livros_pesquisa.jsx';
 import { ShopContext } from '../../context/shop-context.jsx';
 
 function Pagina_Principal() {
