@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
+import { Navigate } from 'react-router-dom'; 
 import './barra_pesquisa.css';
-import { ShopContext } from "../context/shop-context";
-
+import { ShopContext } from '../context/shop-context';
 function Pesquisa() {
-    const { handleCategoriaChange, handleInputChange, categoria, inputValue, value, handleKeyPress } = useContext(ShopContext);
+    const { handleCategoriaChange, handleInputChange, categoria, inputValue, value, handleKeyPress, enterPressed, setEnterPressed } = useContext(ShopContext);
     
     return (
         <div id="barra-pesquisa">
@@ -18,6 +18,12 @@ function Pesquisa() {
                     onChange={handleInputChange} 
                     onKeyDown={handleKeyPress}
                 />
+                {enterPressed && (
+                    <>
+                        <Navigate to="/livro" />
+                        {setEnterPressed(false)}
+                    </>
+                )}
             </div>
             <div className="categorias">
                 <select value={categoria} onChange={handleCategoriaChange}>

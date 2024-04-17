@@ -24,6 +24,7 @@ export const ShopContextProvider = (props) => {
     const [selectedOptions, setSelectedOptions] = useState({});
     const [categoriaValue, setCategoriaValue] = useState('');
     const [autorValue, setAutorValue] = useState('');
+    const [enterPressed, setEnterPressed] = useState(false);
 
     const updatePage = (newStart, newEnd) => {
         setStart(newStart);
@@ -50,6 +51,7 @@ export const ShopContextProvider = (props) => {
         else {
             setPagina_Atual(totalPaginas);
         }
+        setClickedNumber(Pagina_Atual + 1);
     };
 
     const handlePrimeiraPagina = () => {
@@ -96,6 +98,15 @@ export const ShopContextProvider = (props) => {
                 setOrderSelecionada('');
             } else if (key === 'ranking') {
                 setOrderSelecionada('');
+            } else if (key === 'titulo') {
+                setInputValue('');
+            } else if (key === 'all') {
+                setInputValue('');
+                setCategoriaValue('');
+                setAutorValue('');
+                setpriceFiltro({ min: 0, max: 10000 });
+                setscoreFiltro({ min: 0, max: 5 });
+                setOrderSelecionada('');
             }
             return updatedOptions;
         });
@@ -106,6 +117,7 @@ export const ShopContextProvider = (props) => {
         if (event.key === 'Enter') {
             const inputValue = event.target.value;
             setInputValue(inputValue);
+            setEnterPressed(true);
         }
     };
 
@@ -277,6 +289,9 @@ export const ShopContextProvider = (props) => {
         handleOrderSelecionadaPreco,
         handleOrderSelecionadaRanking,
         handleReverterEscolha,
+        enterPressed,
+        setEnterPressed
+
     };
 
     return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;

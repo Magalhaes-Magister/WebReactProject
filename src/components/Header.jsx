@@ -9,7 +9,7 @@ import Pesquisa from './barra_pesquisa';
 import './Header.css';
 
 function Header() {
-    const { numberCartItems } = useContext(ShopContext);
+    const { numberCartItems, handleReverterEscolha } = useContext(ShopContext);
     const cartCount = numberCartItems();
 
     return (
@@ -25,7 +25,7 @@ function Header() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link as={Link} to="/livro">Livros</Nav.Link>
+                    <Nav.Link as={Link} to="/livro" onClick={() => handleReverterEscolha('all')}>Livros</Nav.Link>
                 </Nav>
                 <Pesquisa />
                 <Nav>
