@@ -5,7 +5,7 @@ import './Footer.css';
 
 function Footer() {
     return (
-        <footer className='footer'>
+        <div className='footer'>
             <div className="footer-container">
                 <div className="footer-meio">
                     <div id="titulo">
@@ -15,7 +15,7 @@ function Footer() {
                 </div>
                 <div className="footer-meio">
                     <h2>Contato</h2>
-                    <ul id="textofooter">
+                    <ul>
                         <li><FaPhone /> 909999999</li>
                         <li><FaEnvelope /> info@bookstore.pt</li>
                         <li><FaMapMarkerAlt /> Rua, Sintra, Portugal</li>
@@ -23,7 +23,7 @@ function Footer() {
                 </div>
                 <div className="footer-meio">
                     <h2>Suporte</h2>
-                    <ul id="textofooter">
+                    <ul>
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Política de Privacidade</a></li>
                         <li><a href="#">Termos</a></li>
@@ -31,7 +31,7 @@ function Footer() {
                 </div>
                 <div className="footer-meio">
                     <h2>Redes Sociais</h2>
-                    <ul id="textofooter">
+                    <ul>
                         <li><a href="#">Facebook</a></li>
                         <li><a href="#">Twitter</a></li>
                         <li><a href="#">Instagram</a></li>
@@ -41,7 +41,7 @@ function Footer() {
             <div className="footer-baixo">
                 <p>© 2024, BookStore Inc. Todos os direitos reservados.</p>
             </div>
-        </footer>
+        </div>
     );
 }
 

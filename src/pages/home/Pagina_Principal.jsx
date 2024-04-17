@@ -1,8 +1,10 @@
 import React from 'react';
 import Carrousel from "./carrousel";
-import bookstore from "../../images/bookstore.jpg"
-import './Pagina_Principal.css'
-
+import TopLivros from "./TopLivros";
+import LivrosPorAutor from "./LivrosPorAutor";
+import bookstore from "../../images/bookstore.jpg";
+import './Pagina_Principal.css';
+import './TopLivros.css';
 
 function Pagina_Principal() {
   return (
@@ -11,8 +13,12 @@ function Pagina_Principal() {
             <h1 className={"mainTitle"} >Livros Principais</h1>
         </div>
         <Carrousel/>
+        <div className="outras-abas">
+            <TopLivros />
+            <LivrosPorAutor autor="W. Frank Ableson" />
+        </div>
     </div>
   )
 }
 
-export default Pagina_Principal;    
+export default Pagina_Principal;
