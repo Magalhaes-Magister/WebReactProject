@@ -16,9 +16,9 @@ function Footer() {
                 <div className="footer-meio">
                     <h2>Contato</h2>
                     <ul>
-                        <li><FaPhone /> 909999999</li>
-                        <li><FaEnvelope /> info@bookstore.pt</li>
-                        <li><FaMapMarkerAlt /> Rua, Sintra, Portugal</li>
+                        <li><FaPhone /> 999999999</li>
+                        <li><FaEnvelope /> DuvidasGerais@bookstore.pt</li>
+                        <li><FaMapMarkerAlt /> Rua Camoes, Lisboa, Portugal</li>
                     </ul>
                 </div>
                 <div className="footer-meio">
