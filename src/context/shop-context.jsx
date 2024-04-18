@@ -5,8 +5,8 @@ export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState([]);
-    const [totalBooks, setTotalBooks] = useState(BOOKS.length);
 
+    const [totalBooks, setTotalBooks] = useState(BOOKS.length);
     const [start, setStart] = useState(1);
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
@@ -184,6 +184,7 @@ export const ShopContextProvider = (props) => {
     };
 
 
+
     const numberCartItems = () => {
       let total = 0;
       cartItems.forEach((item) => {total += item.quantity});
@@ -219,7 +220,7 @@ export const ShopContextProvider = (props) => {
     };
 
     const updateCartItemCount = (newAmount, itemId) => {
-        if(newAmount===0){
+        if(newAmount<=0){
             setCartItems(cartItems.filter(item => item.id !== itemId))
         } else {
             setCartItems(cartItems.map((item) => {

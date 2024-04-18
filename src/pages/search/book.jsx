@@ -16,13 +16,13 @@ import {ShopContext} from "../../context/shop-context";
 
 export default function Book({livro}) {
     const {addToCart} = useContext(ShopContext);
-    const {thumbnailUrl, title, authors, price} = livro;
+    const {thumbnailUrl, title, authors, price, score} = livro;
     let autores = authors || [];
     let preco = price || "Indisponível";
     let thumbnail = thumbnailUrl || missing;
 
     let estrelas;
-    switch (livro.score){
+    switch (score){
         case 1:
             estrelas = star_1;
             break;

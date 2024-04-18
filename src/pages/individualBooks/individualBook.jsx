@@ -51,7 +51,6 @@ export const IndividualBook = () => {
             break;
     }
 
-
     return (
         <div className={style.livroCaixa}>
 
@@ -96,7 +95,7 @@ export const IndividualBook = () => {
                     ) : (<></>)}
                     <h3>Características</h3>
                     <p className={style.paddLeft}>Publicado em {formatDate(new Date(publishedDate.$date))}</p>
-                    <p className={style.paddLeft}>Num de páginas: {pageCount}</p>
+                    <p className={style.paddLeft}>Número de páginas: {pageCount}</p>
                     <p className={style.paddLeft}>isbn: {isbn}</p>
 
                 </div>
