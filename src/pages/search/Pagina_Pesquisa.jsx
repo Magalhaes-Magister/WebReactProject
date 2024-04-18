@@ -3,7 +3,7 @@ import './Pagina_Pesquisa.css';
 import Livros_pesquisados from '../search/livros_pesquisa.jsx';
 import { ShopContext } from '../../context/shop-context.jsx';
 
-function Pagina_Principal() {
+function Pagina_Pesquisa() {
   const { inputValue, categoria, priceFiltro, scoreFiltro, orderSelecionada, autorValue, categoriaValue } = useContext(ShopContext);
   console.log(inputValue);
   console.log(categoria);
@@ -18,4 +18,4 @@ function Pagina_Principal() {
   );
 }
 
-export default Pagina_Principal;
+export default Pagina_Pesquisa;
