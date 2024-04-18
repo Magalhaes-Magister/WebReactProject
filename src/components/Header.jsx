@@ -30,7 +30,7 @@ function Header() {
                 <Pesquisa />
                 <Nav>
                     <Nav.Link as={Link} to="/carrinho">
-                        <img src={shoppingCar} alt="" style={{ width: '80px', height: '80px', background: 'none' }} />
+                        <img src={shoppingCar} alt="" style={{ width: '50px', background: 'none' }} />
                         {cartCount > 0 ? (
                             <span className="cart-count">{cartCount}</span>
                         ) : (<></>)}

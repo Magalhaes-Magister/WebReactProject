@@ -26,10 +26,6 @@ export const ShopContextProvider = (props) => {
     const [autorValue, setAutorValue] = useState('');
     const [enterPressed, setEnterPressed] = useState(false);
 
-    const updatePage = (newStart, newEnd) => {
-        setStart(newStart);
-        setEnd(newEnd);
-    };
 
     useEffect(() => {
         setPagina_Atual(1);
@@ -59,13 +55,7 @@ export const ShopContextProvider = (props) => {
         setClickedNumber(1);
     };
 
-    const handleProximaPagina = () => {
-        const ProximaPagina = Pagina_Atual + 1;
-        if (ProximaPagina <= totalPaginas) {
-            setPagina_Atual(ProximaPagina);
-            setClickedNumber(ProximaPagina);
-        }
-    };
+
 
     const CalculoStartEndIndex = () => {
         setStart(0);
@@ -252,7 +242,6 @@ export const ShopContextProvider = (props) => {
         deleteCart,
         getTotalCartAmount,
         numberCartItems,
-        updatePage,
         start,
         end,
         Pagina_Atual,
@@ -260,7 +249,6 @@ export const ShopContextProvider = (props) => {
         totalPaginas,
         handleClick,
         handlePrimeiraPagina,
-        handleProximaPagina,
         CalculoStartEndIndex,
         first,
         last,

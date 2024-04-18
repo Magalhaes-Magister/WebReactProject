@@ -13,7 +13,7 @@ export default function Carrinho() {
 
     return (
         <div className={style.cart}>
-            <h1 className={style.cartTitle}>O teu Carrinho</h1>
+            <h1 className={style.cartTitle} style={{marginTop: "10px"}}>O teu Carrinho</h1>
             <div className={style.cartWrapper}>
                 {totalAmount > 0 ? (
                 <div className={style.cartItems}>

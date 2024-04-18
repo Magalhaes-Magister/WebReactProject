@@ -3,6 +3,7 @@
     flex-direction: row;
     width: 80%;
     margin: auto;
+    margin-top: 10px;
 }
 .livroImg{
     width: 50%;
