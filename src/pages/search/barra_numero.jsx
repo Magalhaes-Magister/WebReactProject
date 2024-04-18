@@ -18,8 +18,7 @@ function BarraNumero( ) {
             {numero}
           </li>
         );
-      })}
-      {end < totalPaginas && <li id="pontos">...</li>}
+      })} 
       {end !== totalPaginas && (
         <li
           className={`numeros_iniciais ${clickedNumber === totalPaginas ? 'active' : ''}`}
@@ -34,3 +33,5 @@ function BarraNumero( ) {
 }
 
 export default BarraNumero;
+
+// {5 < totalPaginas && <li id="pontos">...</li>}
