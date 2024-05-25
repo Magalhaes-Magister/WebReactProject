@@ -1,12 +1,26 @@
-import React from 'react';
-import { BOOKS } from "../../books"; // Importe a constante BOOKS
+import React, { useEffect, useState } from 'react';
+import { fetchBooks } from '../../books';
 import Row from 'react-bootstrap/Row';
 import Book from '../search/book';
 import './TopLivros.css';
 import bookAutor from "../../images/bookAutor.jpg";
 
 function TopLivros() {
-    const topLivros = BOOKS.filter(item => item.score === 5).slice(0, 5); // Filtra os livros com score 5 e limita a 5 livros
+    const [topLivros, setTopLivros] = useState([]);
+
+    const fetchData = async () => {
+        try {
+            const data = await fetchBooks();
+            const topLivros = data.filter(item => item.score === 5).slice(0, 5);
+            setTopLivros(topLivros);
+        } catch (error) {
+            console.error('Erro ao buscar livros:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div>

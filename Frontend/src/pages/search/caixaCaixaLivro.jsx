@@ -1,24 +1,33 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './caixaCaixaLivroStyle.css';
-import db from '../../db.json';
 import { ShopContext } from '../../context/shop-context';
+import { fetchBooks } from '../../books'; // Importe a função fetchBooks
 import Book from "./book";
-import Row from 'react-bootstrap/Row'
+import Row from 'react-bootstrap/Row';
 
-export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue}) {
+export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue }) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
-  const [books, setBooks] = useState([]);
+  const [booksData, setBooksData] = useState([]); // Estado para armazenar os dados dos livros
 
   useEffect(() => {
-    setBooks([...db.books]);
-  }, []);
+    const fetchData = async () => {
+      try {
+        const books = await fetchBooks(); // Busca os dados dos livros
+        setBooksData(books); // Atualiza o estado com os dados dos livros
+      } catch (error) {
+        console.error('Erro ao buscar livros:', error);
+      }
+    };
 
-  let BooksFiltrados = [...books];
+    fetchData(); // Chama a função fetchData ao montar o componente
+  }, []); // O array de dependências está vazio, então o useEffect só será executado uma vez, ao montar o componente
 
-  BooksFiltrados = BooksFiltrados.map(book => ({ //como havia preços nulos tive de pedir para ele considerar 0
+  let BooksFiltrados = booksData; // Use os dados dos livros armazenados no estado
+
+  BooksFiltrados = BooksFiltrados.map(book => ({
     ...book,
     price: typeof book.price === 'number' ? book.price : 0
-}));
+  }));
 
   if (scoreFiltro && scoreFiltro.min !== undefined && scoreFiltro.max !== undefined) {
     BooksFiltrados = BooksFiltrados.filter(book => {
@@ -28,9 +37,9 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
 
   if (priceFiltro && priceFiltro.min !== undefined && priceFiltro.max !== undefined) {
     BooksFiltrados = BooksFiltrados.filter(book => {
-        return book.price >= priceFiltro.min && book.price <= priceFiltro.max;
+      return book.price >= priceFiltro.min && book.price <= priceFiltro.max;
     });
-}
+  }
 
   if (autorValue && autorValue.length > 0) {
     BooksFiltrados = BooksFiltrados.filter(book => {
@@ -48,7 +57,6 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
     BooksFiltrados = BooksFiltrados.filter(book => {
       return book.authors.includes(input);
     });
-    console.log(BooksFiltrados)
   }
 
   if (categoriaSelecionada === 'titulo' && input && input.length > 0) {
@@ -62,7 +70,6 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
       return book.categories.some(category => category.toLowerCase().includes(input.toLowerCase()));
     });
   }
-
 
   if (OrderSelecionada === 'maiorScore') {
     BooksFiltrados.sort((a, b) => b.score - a.score);
@@ -79,7 +86,7 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro,OrderSelecion
   let books_mostrar = BooksFiltrados.slice(first - 1, last);
   let a = BooksFiltrados.length;
   updateTotalBooksLength(a);
-  console.log(books_mostrar)
+
   return (
     <Row className="caixa_grande">
       {books_mostrar.map((b, index) => (

@@ -1,20 +1,20 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { BOOKS } from "../books.js";
+import { fetchBooks } from '../books.js';
 
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
+    const [BOOKS, setBOOKS] = useState([]);
     const [cartItems, setCartItems] = useState([]);
-
-    const [totalBooks, setTotalBooks] = useState(BOOKS.length);
+    const [totalBooks, setTotalBooks] = useState(0); 
     const [start, setStart] = useState(1);
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
     const [last, setLast] = useState(5);
-    const booksPerPage = 10;
-    const totalPaginas = Math.ceil(totalBooks / booksPerPage);
     const [Pagina_Atual, setPagina_Atual] = useState(1);
     const [clickedNumber, setClickedNumber] = useState('');
+    const booksPerPage = 10;
+    const totalPaginas = Math.ceil(totalBooks / booksPerPage);
     const [categoria, setCategoria] = useState('titulo');
     const [inputValue, setInputValue] = useState('');
     const [orderSelecionada, setOrderSelecionada] = useState('');
@@ -26,11 +26,24 @@ export const ShopContextProvider = (props) => {
     const [autorValue, setAutorValue] = useState('');
     const [enterPressed, setEnterPressed] = useState(false);
 
-
     useEffect(() => {
         setPagina_Atual(1);
         setClickedNumber(1);
     }, [totalBooks]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchBooks();
+                setTotalBooks(data.length);
+                setBOOKS(data);
+            } catch (error) {
+                console.error('Erro ao buscar livros:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleClick = (number) => {
         setPagina_Atual(number);
