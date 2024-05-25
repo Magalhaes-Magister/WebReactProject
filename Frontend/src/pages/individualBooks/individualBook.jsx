@@ -1,6 +1,6 @@
-import React, {useContext} from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {BOOKS} from "../../books";
+import { fetchBooks } from '../../books';
 import style from "./individualBook.module.css";
 import Button from "react-bootstrap/Button";
 import star_1 from "../../images/1_stars.png";
@@ -10,7 +10,7 @@ import star_4 from "../../images/4_stars.png";
 import star_5 from "../../images/5_stars.png";
 import missing from "../../images/missing_img.png";
 import basket from "../../images/basket.png";
-import {ShopContext} from "../../context/shop-context";
+import { ShopContext } from "../../context/shop-context";
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -25,15 +25,33 @@ function formatDate(date) {
 }
 
 export const IndividualBook = () => {
+    const [book, setBook] = useState(null);
     const { livroId } = useParams();
-    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn}
-        = BOOKS.find((item) => { return item.id === livroId});
-    const {addToCart} = useContext(ShopContext);
+    const { addToCart } = useContext(ShopContext);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchBooks();
+                const selectedBook = data.find(item => item.id === livroId);
+                setBook(selectedBook);
+            } catch (error) {
+                console.error('Erro ao buscar livro:', error);
+            }
+        };
+
+        fetchData();
+    }, [livroId]);
+
+    if (!book) return null;
+
+    const { thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn } = book;
+
     let preco = price || "Indisponível";
     let thumbnail = thumbnailUrl || missing;
 
     let estrelas;
-    switch (score){
+    switch (score) {
         case 1:
             estrelas = star_1;
             break;
@@ -57,30 +75,30 @@ export const IndividualBook = () => {
             <div className={style.livroImg}>
                 <img src={thumbnail} className={style.thumb}
                     onError={event => {
-                    event.target.src = missing
-                    event.onerror = null
-                }}/>
+                        event.target.src = missing
+                        event.onerror = null
+                    }} />
             </div>
 
             <div className={style.livroLeft}>
                 <div className={style.livroInfo}>
-                    <h1 style={{fontWeight: "bold"}}>{title}</h1>
-                    <ul style={{listStyleType: "none"}}>
+                    <h1 style={{ fontWeight: "bold" }}>{title}</h1>
+                    <ul style={{ listStyleType: "none" }}>
                         by
                         {authors.map(autor => {
-                            return (<li>{autor}</li>)
+                            return (<li key={autor}>{autor}</li>)
                         })}
                     </ul>
-                    <img src={estrelas} style={{maxWidth: "30%", minWidth: "170px"}}/>
-                    <p className={style.preco}>{preco} {preco!=="Indisponível"? "€":""}</p>
+                    <img src={estrelas} style={{ maxWidth: "30%", minWidth: "170px" }} />
+                    <p className={style.preco}>{preco} {preco !== "Indisponível" ? "€" : ""}</p>
                     {preco !== "Indisponível" ? (
-                        <Button variant="warning" style={{width: "45%", height: "50px"}} onClick={() => addToCart(livroId)}>
-                            <img src={basket} alt="" width={25}/>
+                        <Button variant="warning" style={{ width: "45%", height: "50px" }} onClick={() => addToCart(livroId)}>
+                            <img src={basket} alt="" width={25} />
                             &ensp;
                             Comprar
-                        </Button>): (
-                        <Button variant="warning" style={{width: "45%", height: "50px"}}  disabled>
-                            <img src={basket} alt="" width={25}/>
+                        </Button>) : (
+                        <Button variant="warning" style={{ width: "45%", height: "50px" }} disabled>
+                            <img src={basket} alt="" width={25} />
                             &ensp;
                             Comprar
                         </Button>

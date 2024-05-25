@@ -1,16 +1,29 @@
-import React from 'react'
-import {BOOKS} from "../../books";
+import React, { useContext, useEffect, useState } from 'react';
+import { fetchBooks } from '../../books';
 import "./carrousel_style.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Link} from "react-router-dom";
-import Card from 'react-bootstrap/Card'
+import { Link } from "react-router-dom";
+import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const books = BOOKS.filter(item => {return(item.score === 5)})
-
 function Carrousel() {
+    const [books, setBooks] = useState([]);
+
+    const fetchData = async () => {
+        try {
+            const data = await fetchBooks();
+            setBooks(data.filter(item => item.score === 5));
+        } catch (error) {
+            console.error('Erro ao buscar livros:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const settings = {
         arrows: true,
         dots: true,
@@ -43,19 +56,20 @@ function Carrousel() {
             }
         ]
     };
+
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                {books.map((item) => {return(
-                    <Link to={`/livro/${item.id}`}>
+                {books.map((item) => (
+                    <Link to={`/livro/${item.id}`} key={item.id}>
                         <Card>
-                            <Card.Img className="img" variant="top" src={item.thumbnailUrl}/>
+                            <Card.Img className="img" variant="top" src={item.thumbnailUrl} />
                             <Card.Body>
-                                <Card.Title style={{fontWeight: "bold"}}>{item.title}</Card.Title>
+                                <Card.Title style={{ fontWeight: "bold" }}>{item.title}</Card.Title>
                             </Card.Body>
                         </Card>
                     </Link>
-                )})}
+                ))}
             </Slider>
         </div>
     );

@@ -1,12 +1,26 @@
-import React from 'react';
-import { BOOKS } from "../../books"; // Importe a constante BOOKS
+import React, { useContext, useState , useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Book from '../search/book';
 import './LivrosPorAutor.css';
 import bookAutor from "../../images/bookAutor.jpg";
+import { fetchBooks } from '../../books';
 
 function LivrosPorAutor({ autor }) {
-    const livrosDoAutor = BOOKS.filter(item => item.authors.includes(autor)); // Filtra os livros pelo autor especificado
+    const [livrosDoAutor, setLivrosDoAutor] = useState([]);
+
+    const fetchData = async () => {
+        try {
+            const data = await fetchBooks();
+            const livros = data.filter(item => item.authors.includes(autor));
+            setLivrosDoAutor(livros);
+        } catch (error) {
+            console.error('Erro ao buscar livros:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div>
@@ -15,8 +29,8 @@ function LivrosPorAutor({ autor }) {
             </div>
             <Row className="caixa_grande">
                 {livrosDoAutor.map((livro) => (
-                    <Book key={livro.id} livro={livro} />) // Add closing parenthesis here
-                )}
+                    <Book key={livro.id} livro={livro} />
+                ))}
             </Row>
         </div>
     );
