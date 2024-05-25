@@ -7,12 +7,14 @@ from functools import wraps
 import jwt
 import json
 import ast
+import math
 
 app = Flask(__name__)
 CORS(app)
 
-
-app.config['SECRET_KEY'] = 'SEGREDO'
+app.config['SECRET_KEY'] = '303100f962cd65d687b93398530b87015d9180c7740b657bf2030e0a2af40940'
+client = MongoClient('mongodb+srv://iagms:uHj56fJdlWHTurVd@clusterprojeto.ca1xd8i.mongodb.net/',tls=True,tlsAllowInvalidCertificates=True)
+db = client["Projeto_livraria"]
 
 def token_required(func):
     @wraps(func)
@@ -30,35 +32,58 @@ def token_required(func):
         return func(*args, **kwargs)
     return decorated
 
-client = MongoClient('mongodb+srv://iagms:uHj56fJdlWHTurVd@clusterprojeto.ca1xd8i.mongodb.net/',tls=True,tlsAllowInvalidCertificates=True)
-db = client["Projeto_livraria"]
-
 def parse_json(data):
     return json.loads(json_util.dumps(data))
 
-@app.route("/books", methods=["GET", "POST", "DELETE", "PUT"])
-def get_books():
-    if request.method == "GET":
+def handle_pagination(query, request):
+    if request.args.get('page') != None or request.args.get('limit') != None:
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
-        skip = (page-1)*limit
-        books = db.books.find().skip(skip).limit(limit)
-        books_list = list(books)
-        return parse_json(books_list), 200
-
-    elif request.method == "POST":
-        books = request.json
-        if type(books) != list: books = [books]
-        db.books.insert_many(books)
-        return 'The book was added', 200
-
-    elif request.method == "DELETE":
-        return
+        last = math.ceil(len(list(db.books.find(query)))/limit)
+        if page <= last:
+            skip = (page-1)*limit
+            books = db.books.find(query).skip(skip).limit(limit)
+            previous = 0
+            next = 0
+            previous = page-1 if page > 1 else None
+            next = page+1 if page < last else None
+            books_pages = {"books": books,"pages": {"current": page, "previous": previous, "next": next, "last": last, "total": len(list(db.books.find(query)))}}
+            return books_pages
+        else:
+            return jsonify({'error: Página não acessível'}),
+    else:
+        books = db.books.find(query)
+        return {"books": books}
 
 @app.route("/books/<id>", methods=["GET"])
 def get_book_id(id):
-    book =  db.books.find_one({"_id": ObjectId(id)})
-    return parse_json(book), 200
+    try:
+        book = db.books.find_one({"_id": ObjectId(id)})
+        if book:
+            return parse_json(book), 200
+        else:
+            return jsonify({"error": "Livro não encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/books", methods=["GET"])
+def get_books():
+    query = {}
+    books_list = handle_pagination(query, request)
+    return parse_json(books_list), 200
+
+@app.route("/books", methods=["POST"])
+@token_required
+def post_books():
+    books = request.json
+    if type(books) != list: books = [books]
+    db.books.insert_many(books)
+    return 'The book was added', 200
+
+@app.route("/books/<id>", methods=["DELETE", "PUT"])
+@token_required
+def delete_put_books(id):
+    return
 
 @app.route("/books/total", methods=["GET"])
 def get_total_books():
@@ -67,22 +92,16 @@ def get_total_books():
 
 @app.route("/books/autor/<autor>", methods=["GET"])
 def get_books_autor(autor):
-    page = int(request.args.get('page'))
-    limit = int(request.args.get('limit'))
-    skip = (page-1)*limit
-    books = db.books.find({"authors": autor}).skip(skip).limit(limit)
-    books_list = list(books)
+    query = {"authors": autor}
+    books_list = handle_pagination(query, request)
     return parse_json(books_list), 200
 
 @app.route("/books/ano/<int:ano>", methods=["GET"])
 def get_books_year(ano):
-    page = int(request.args.get('page'))
-    limit = int(request.args.get('limit'))
-    skip = (page-1)*limit
     ano_inicial = datetime(ano, 1, 1)
     ano_fim = datetime(ano, 12, 31)
-    books = db.books.find({"publishedDate":{"$gte": ano_inicial, "$lte": ano_fim}}).skip(skip).limit(limit)
-    books_list = list(books)
+    query = {"publishedDate":{"$gte": ano_inicial, "$lte": ano_fim}}
+    books_list = handle_pagination(query, request)
     return parse_json(books_list), 200
 
 @app.route("/user/signup", methods=["POST"])
@@ -111,7 +130,7 @@ def login():
     else:
         token = jwt.encode({
             'username': dados['username'],
-            'exp': datetime.utcnow() + timedelta(minutes=1)
+            'exp': datetime.utcnow() + timedelta(minutes=5)
             }, app.config['SECRET_KEY'], algorithm="HS256")
 
         return jsonify({'token': token}), 200
