@@ -1,14 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './caixaCaixaLivroStyle.css';
 import { ShopContext } from '../../context/shop-context';
-import { fetchBooks } from '../../books'; // Importe a função fetchBooks
+import {useFetch} from "../../fetch/useFetch";
 import Book from "./book";
 import Row from 'react-bootstrap/Row';
 
 export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue }) {
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
   const [booksData, setBooksData] = useState([]); // Estado para armazenar os dados dos livros
-
+  const {data, error} = useFetch();
+  const books = data.books
+/*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,7 +24,10 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecio
     fetchData(); // Chama a função fetchData ao montar o componente
   }, []); // O array de dependências está vazio, então o useEffect só será executado uma vez, ao montar o componente
 
+ */
+
   let BooksFiltrados = booksData; // Use os dados dos livros armazenados no estado
+
 
   BooksFiltrados = BooksFiltrados.map(book => ({
     ...book,
@@ -89,7 +94,7 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecio
 
   return (
     <Row className="caixa_grande">
-      {books_mostrar.map((b, index) => (
+      {books.map((b, index) => (
         <Book key={index} livro={b} />
       ))}
     </Row>

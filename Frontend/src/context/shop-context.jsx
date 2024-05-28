@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { fetchBooks } from '../books.js';
+import { fetchBooks } from '../useFetch.js';
 
 export const ShopContext = createContext(null);
 
