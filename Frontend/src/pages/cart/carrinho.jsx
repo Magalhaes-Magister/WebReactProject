@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from "../../context/shop-context";
-import { BooksContext, fetchBooks } from '../../books';
 import { useNavigate } from "react-router-dom";
 import style from './carrinho_style.module.css';
 import Button from "react-bootstrap/Button";
 import LivroCarrinho from "./livroCarrinho";
+import {useFetch} from "../../fetch/useFetch";
 
 export default function Carrinho() {
-    const [books, setBooks] = useState([]);
     const { cartItems, deleteCart, getTotalCartAmount } = useContext(ShopContext);
     const navigate = useNavigate();
 
+    const {data, error} = useFetch();
+    const books = data.books
+
+    /*
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -23,6 +26,8 @@ export default function Carrinho() {
 
         fetchData();
     }, []);
+
+     */
 
     let totalAmount = getTotalCartAmount().toFixed(2);
 

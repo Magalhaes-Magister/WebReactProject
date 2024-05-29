@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { fetchBooks } from '../../books';
 import Row from 'react-bootstrap/Row';
 import Book from '../search/book';
 import './TopLivros.css';
 import bookAutor from "../../images/bookAutor.jpg";
+import {useFetch} from "../../fetch/useFetch";
 
 function TopLivros() {
+    const {data, error} = useFetch();
+    const books = data.books
     const [topLivros, setTopLivros] = useState([]);
-
+    const livros = books.filter(item => item.score === 5).slice(0, 5);
+    setTopLivros(livros);
+/*
     const fetchData = async () => {
         try {
             const data = await fetchBooks();
@@ -21,6 +25,8 @@ function TopLivros() {
     useEffect(() => {
         fetchData();
     }, []);
+
+ */
 
     return (
         <div>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { fetchBooks } from '../../books';
 import "./carrousel_style.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -7,8 +6,12 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useFetch} from "../../fetch/useFetch";
 
 function Carrousel() {
+    const {data, error} = useFetch();
+    const books = data.books
+    /*
     const [books, setBooks] = useState([]);
 
     const fetchData = async () => {
@@ -23,6 +26,8 @@ function Carrousel() {
     useEffect(() => {
         fetchData();
     }, []);
+
+     */
 
     const settings = {
         arrows: true,

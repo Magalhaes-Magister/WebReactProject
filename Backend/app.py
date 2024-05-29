@@ -92,7 +92,7 @@ def get_total_books():
 
 @app.route("/books/autor/<autor>", methods=["GET"])
 def get_books_autor(autor):
-    query = {"authors": autor}
+    query = {"authors": {'$regex': autor, '$options': 'i'}}
     books_list = handle_pagination(query, request)
     return parse_json(books_list), 200
 

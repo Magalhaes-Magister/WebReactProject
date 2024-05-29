@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchBooks } from '../../books';
 import style from "./individualBook.module.css";
 import Button from "react-bootstrap/Button";
 import star_1 from "../../images/1_stars.png";
@@ -11,6 +10,7 @@ import star_5 from "../../images/5_stars.png";
 import missing from "../../images/missing_img.png";
 import basket from "../../images/basket.png";
 import { ShopContext } from "../../context/shop-context";
+import {useFetch} from "../../fetch/useFetch";
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -28,7 +28,10 @@ export const IndividualBook = () => {
     const [book, setBook] = useState(null);
     const { livroId } = useParams();
     const { addToCart } = useContext(ShopContext);
+    const {data, error} = useFetch();
+    const books = data.books
 
+    /*
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -42,6 +45,8 @@ export const IndividualBook = () => {
 
         fetchData();
     }, [livroId]);
+
+     */
 
     if (!book) return null;
 

@@ -3,24 +3,35 @@ import Row from 'react-bootstrap/Row';
 import Book from '../search/book';
 import './LivrosPorAutor.css';
 import bookAutor from "../../images/bookAutor.jpg";
-import { fetchBooks } from '../../books';
+import {useFetch} from "../../fetch/useFetch";
 
 function LivrosPorAutor({ autor }) {
+    const {data, error} = useFetch();
+    const books = data.books
+
     const [livrosDoAutor, setLivrosDoAutor] = useState([]);
 
-    const fetchData = async () => {
-        try {
-            const data = await fetchBooks();
-            const livros = data.filter(item => item.authors.includes(autor));
-            setLivrosDoAutor(livros);
-        } catch (error) {
-            console.error('Erro ao buscar livros:', error);
-        }
-    };
+    const livros = books.filter(item => item.authors.includes(autor));
+    setLivrosDoAutor(livros);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+
+
+    /*
+       const fetchData = async () => {
+           try {
+               const data = await fetchBooks();
+               const livros = data.filter(item => item.authors.includes(autor));
+               setLivrosDoAutor(livros);
+           } catch (error) {
+               console.error('Erro ao buscar livros:', error);
+           }
+       };
+
+       useEffect(() => {
+           fetchData();
+       }, []);
+
+        */
 
     return (
         <div>

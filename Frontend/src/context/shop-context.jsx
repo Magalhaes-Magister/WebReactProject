@@ -1,12 +1,15 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { fetchBooks } from '../useFetch.js';
+import {useFetch} from "../fetch/useFetch";
 
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
-    const [BOOKS, setBOOKS] = useState([]);
+    const {data, error} = useFetch();
+    const books = data.books
+
+    const [BOOKS, setBOOKS] = useState(books);
     const [cartItems, setCartItems] = useState([]);
-    const [totalBooks, setTotalBooks] = useState(0); 
+    const [totalBooks, setTotalBooks] = useState(books.length);
     const [start, setStart] = useState(1);
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
@@ -26,24 +29,30 @@ export const ShopContextProvider = (props) => {
     const [autorValue, setAutorValue] = useState('');
     const [enterPressed, setEnterPressed] = useState(false);
 
+
+
+
     useEffect(() => {
         setPagina_Atual(1);
         setClickedNumber(1);
     }, [totalBooks]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetchBooks();
-                setTotalBooks(data.length);
-                setBOOKS(data);
-            } catch (error) {
-                console.error('Erro ao buscar livros:', error);
-            }
-        };
+    /*
+        useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const data = await fetchBooks();
+                    setTotalBooks(data.length);
+                    setBOOKS(data);
+                } catch (error) {
+                    console.error('Erro ao buscar livros:', error);
+                }
+            };
 
-        fetchData();
-    }, []);
+            fetchData();
+        }, []);
+
+         */
 
     const handleClick = (number) => {
         setPagina_Atual(number);

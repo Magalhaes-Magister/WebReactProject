@@ -26,7 +26,7 @@ export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecio
 
  */
 
-  let BooksFiltrados = booksData; // Use os dados dos livros armazenados no estado
+  let BooksFiltrados = books; // Use os dados dos livros armazenados no estado
 
 
   BooksFiltrados = BooksFiltrados.map(book => ({
