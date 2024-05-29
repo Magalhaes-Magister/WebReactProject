@@ -1,23 +1,24 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {useFetch} from "../fetch/useFetch";
+import {useFetch} from "../books.js";
+
 
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
-    const {data, error} = useFetch();
-    const books = data.books
+    const {data} = useFetch();
+    const BOOKS = data.books;
 
-    const [BOOKS, setBOOKS] = useState(books);
     const [cartItems, setCartItems] = useState([]);
-    const [totalBooks, setTotalBooks] = useState(books.length);
+
+    const [totalBooks, setTotalBooks] = useState(BOOKS.length);
     const [start, setStart] = useState(1);
     const [end, setEnd] = useState(1);
     const [first, setFirst] = useState(0);
     const [last, setLast] = useState(5);
-    const [Pagina_Atual, setPagina_Atual] = useState(1);
-    const [clickedNumber, setClickedNumber] = useState('');
     const booksPerPage = 10;
     const totalPaginas = Math.ceil(totalBooks / booksPerPage);
+    const [Pagina_Atual, setPagina_Atual] = useState(1);
+    const [clickedNumber, setClickedNumber] = useState('');
     const [categoria, setCategoria] = useState('titulo');
     const [inputValue, setInputValue] = useState('');
     const [orderSelecionada, setOrderSelecionada] = useState('');
@@ -30,29 +31,10 @@ export const ShopContextProvider = (props) => {
     const [enterPressed, setEnterPressed] = useState(false);
 
 
-
-
     useEffect(() => {
         setPagina_Atual(1);
         setClickedNumber(1);
     }, [totalBooks]);
-
-    /*
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const data = await fetchBooks();
-                    setTotalBooks(data.length);
-                    setBOOKS(data);
-                } catch (error) {
-                    console.error('Erro ao buscar livros:', error);
-                }
-            };
-
-            fetchData();
-        }, []);
-
-         */
 
     const handleClick = (number) => {
         setPagina_Atual(number);
@@ -92,7 +74,7 @@ export const ShopContextProvider = (props) => {
     const updateTotalBooksLength = (total) => {
         setTotalBooks(total);
     };
-    
+
     const handleReverterEscolha = (key) => {
         setSelectedOptions(prevOptions => {
             const updatedOptions = { ...prevOptions };
@@ -123,8 +105,8 @@ export const ShopContextProvider = (props) => {
             return updatedOptions;
         });
     };
-    
-    
+
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             const inputValue = event.target.value;
@@ -151,15 +133,15 @@ export const ShopContextProvider = (props) => {
             price: `Preço: ${order}`
         }));
     };
-    
+
     const handleOrderSelecionadaRanking = (order) => {
         setOrderSelecionada(order);
         setSelectedOptions(prevOptions => ({
             ...prevOptions,
             ranking: `Ranking: ${order}`
         }));
-    };  
-    
+    };
+
 
     const handleScoreFiltro = (min, max) => {
         setscoreFiltro({ min, max });
@@ -178,7 +160,7 @@ export const ShopContextProvider = (props) => {
     };
 
     const handleAutorChange = (event) => {
-        setAutorValue(event); 
+        setAutorValue(event);
         setCategoria('autor');
         setSelectedOptions(prevOptions => ({
             ...prevOptions,
@@ -198,8 +180,8 @@ export const ShopContextProvider = (props) => {
 
 
     const numberCartItems = () => {
-      let total = 0;
-      cartItems.forEach((item) => {total += item.quantity});
+        let total = 0;
+        cartItems.forEach((item) => {total += item.quantity});
         return total;
     };
 
@@ -209,12 +191,12 @@ export const ShopContextProvider = (props) => {
         }
         else{
             setCartItems(cartItems.map((item) => {
-            if (item.id === itemId){
-                return{...item, quantity: item.quantity +1}
-            } else {
-                return item
-            }
-        }))}
+                if (item.id === itemId){
+                    return{...item, quantity: item.quantity +1}
+                } else {
+                    return item
+                }
+            }))}
     };
 
     const removeFromCart = (itemId) => {
@@ -242,7 +224,7 @@ export const ShopContextProvider = (props) => {
                     return item
                 }
             }))
-    }}
+        }}
 
     const getTotalCartAmount = () => {
         let total = 0;

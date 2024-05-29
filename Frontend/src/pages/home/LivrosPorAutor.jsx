@@ -1,37 +1,15 @@
-import React, { useContext, useState , useEffect } from 'react';
+import React from 'react';
+import {useFetch} from "../../books";
 import Row from 'react-bootstrap/Row';
 import Book from '../search/book';
 import './LivrosPorAutor.css';
 import bookAutor from "../../images/bookAutor.jpg";
-import {useFetch} from "../../fetch/useFetch";
 
 function LivrosPorAutor({ autor }) {
-    const {data, error} = useFetch();
-    const books = data.books
+    const {data} = useFetch();
+    const BOOKS = data.books;
 
-    const [livrosDoAutor, setLivrosDoAutor] = useState([]);
-
-    const livros = books.filter(item => item.authors.includes(autor));
-    setLivrosDoAutor(livros);
-
-
-
-    /*
-       const fetchData = async () => {
-           try {
-               const data = await fetchBooks();
-               const livros = data.filter(item => item.authors.includes(autor));
-               setLivrosDoAutor(livros);
-           } catch (error) {
-               console.error('Erro ao buscar livros:', error);
-           }
-       };
-
-       useEffect(() => {
-           fetchData();
-       }, []);
-
-        */
+    const livrosDoAutor = BOOKS.filter(item => item.authors.includes(autor)); // Filtra os livros pelo autor especificado
 
     return (
         <div>
@@ -40,11 +18,10 @@ function LivrosPorAutor({ autor }) {
             </div>
             <Row className="caixa_grande">
                 {livrosDoAutor.map((livro) => (
-                    <Book key={livro.id} livro={livro} />
-                ))}
+                    <Book key={livro.id} livro={livro} />) // Add closing parenthesis here
+                )}
             </Row>
         </div>
     );
 }
-
 export default LivrosPorAutor;
