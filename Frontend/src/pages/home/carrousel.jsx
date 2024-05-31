@@ -1,5 +1,5 @@
 import React from 'react'
-import {useFetch} from "../../books";
+import {useFetch} from "../../useFetch";
 import "./carrousel_style.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

@@ -10,7 +10,7 @@ import ast
 import math
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config['SECRET_KEY'] = '303100f962cd65d687b93398530b87015d9180c7740b657bf2030e0a2af40940'
 client = MongoClient('mongodb+srv://iagms:uHj56fJdlWHTurVd@clusterprojeto.ca1xd8i.mongodb.net/',tls=True,tlsAllowInvalidCertificates=True)
@@ -92,7 +92,7 @@ def get_total_books():
 
 @app.route("/books/autor/<autor>", methods=["GET"])
 def get_books_autor(autor):
-    query = {"authors": {'$regex': autor, '$options': 'i'}}
+    query = {"authors": autor}
     books_list = handle_pagination(query, request)
     return parse_json(books_list), 200
 
@@ -113,6 +113,13 @@ def create_user():
         return "Utilizador adicionado", 200
     else:
         return "Utilizador já existe", 409
+
+@app.route("/cart", methods=["POST"])
+def add_cart():
+    cart = request.json
+    print(cart)
+    db.cart.insert_one(cart)
+    return jsonify(message='Carrinho carregado'), 200
 
 @app.route('/user/login', methods=['POST'])
 def login():

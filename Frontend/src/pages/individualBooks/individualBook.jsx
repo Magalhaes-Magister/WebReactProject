@@ -1,7 +1,7 @@
 
 import React, {useContext} from 'react'
 import { useParams } from 'react-router-dom';
-import {useFetch} from "../../books";
+import {useFetch} from "../../useFetch";
 import style from "./individualBook.module.css";
 import Button from "react-bootstrap/Button";
 import star_1 from "../../images/1_stars.png";
@@ -28,11 +28,17 @@ function formatDate(date) {
 export const IndividualBook = () => {
     const {data} = useFetch();
     const BOOKS = data.books;
+    const {addToCart} = useContext(ShopContext);
 
     const { livroId } = useParams();
-    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn}
-        = BOOKS.find((item) => { return item.id === livroId});
-    const {addToCart} = useContext(ShopContext);
+    const book = BOOKS.find((item) => { return item.id === livroId});
+
+    if (!book) {
+        return <div>Book not found</div>;
+    }
+
+
+    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn} = book;
     let preco = price || "Indisponível";
     let thumbnail = thumbnailUrl || missing;
 

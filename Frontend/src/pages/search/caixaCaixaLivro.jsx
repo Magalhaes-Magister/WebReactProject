@@ -3,11 +3,11 @@ import './caixaCaixaLivroStyle.css';
 import { ShopContext } from '../../context/shop-context';
 import Book from "./book";
 import Row from 'react-bootstrap/Row';
-import { useFetch } from "../../books";
+import { useFetch } from "../../useFetch";
 
 export default function CaixaCaixaLivro({ scoreFiltro, priceFiltro, OrderSelecionada, input, categoriaSelecionada, autorValue, categoriaValue }) {
   const { data } = useFetch();
-  const BOOKS = data.books || [];
+  const BOOKS = data.books;
 
   const { updateTotalBooksLength, first, last } = useContext(ShopContext);
   const [books, setBooks] = useState([]);

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {useFetch} from "../books.js";
+import {useFetch} from "../useFetch.js";
 
 
 export const ShopContext = createContext(null);
@@ -237,6 +237,7 @@ export const ShopContextProvider = (props) => {
     const deleteCart = () => {
         setCartItems([]);
     };
+
 
     const contextValue = {
         cartItems,

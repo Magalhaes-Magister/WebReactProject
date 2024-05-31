@@ -1,8 +1,7 @@
 import LivroCarrinho from "./livroCarrinho";
 import React, {useContext} from 'react'
 import {ShopContext} from "../../context/shop-context";
-import {useFetch} from "../../books";
-
+import {postData, useFetch} from "../../useFetch";
 import {useNavigate} from "react-router-dom";
 import style from './carrinho_style.module.css'
 import Button from "react-bootstrap/Button";
@@ -14,6 +13,21 @@ export default function Carrinho() {
     const {cartItems, deleteCart, getTotalCartAmount} = useContext(ShopContext);
     let totalAmount = getTotalCartAmount().toFixed(2);
     const navigate = useNavigate();
+
+    const handleCheckout = async () => {
+        const cartData = {
+          items: cartItems,
+          totalAmount: totalAmount,
+            timestamp: new Date().toISOString()
+        };
+        try {
+            await postData(cartData);
+            console.log('Checkout successful');
+            alert("Checkout successful");
+        } catch (error) {
+            console.error('Checkout failed:', error);
+        }
+    };
 
     return (
         <div className={style.cart}>
@@ -38,7 +52,8 @@ export default function Carrinho() {
                             <span style={{fontSize: "2em", color: "red", fontWeight: "bold"}}> {totalAmount}€</span>
                         </div>
 
-                        <Button variant={"warning"} className={style.buttonBuy}>Checkout</Button>
+                        <Button variant={"warning"} className={style.buttonBuy}
+                                onClick={handleCheckout}>Checkout</Button>
                         <div className={style.buttonsAd}>
                             <Button onClick={() => navigate("/livro")}>Continuar a comprar</Button>
                             <Button variant={"outline-danger"} onClick={() => deleteCart()}>Delete Cart</Button>
