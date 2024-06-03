@@ -29,6 +29,9 @@ def token_required(func):
         except jwt.ExpiredSignatureError:
             return jsonify({'expirado': True}), 401
 
+        except jwt.InvalidTokenError:
+            return jsonify({'Token Inválido'}), 401
+
         return func(*args, **kwargs)
     return decorated
 
@@ -80,11 +83,6 @@ def post_books():
     db.books.insert_many(books)
     return 'The book was added', 200
 
-@app.route("/books/<id>", methods=["DELETE", "PUT"])
-@token_required
-def delete_put_books(id):
-    return
-
 @app.route("/books/total", methods=["GET"])
 def get_total_books():
     total = db.books.count_documents({})
@@ -92,7 +90,7 @@ def get_total_books():
 
 @app.route("/books/autor/<autor>", methods=["GET"])
 def get_books_autor(autor):
-    query = {"authors": autor}
+    query = {"authors": {'$regex': autor, '$options': 'i'}}
     books_list = handle_pagination(query, request)
     return parse_json(books_list), 200
 
@@ -141,3 +139,71 @@ def login():
             }, app.config['SECRET_KEY'], algorithm="HS256")
 
         return jsonify({'token': token}), 200
+
+
+
+@app.route("/books/featured/", methods=["GET"])
+def get_featured_books():
+    try:
+        top_books_price = db.books.find().sort("price", -1).limit(5)
+        if top_books_price:
+            return parse_json(list(top_books_price)), 200
+        else:
+            return jsonify({"error": "Livro não encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/books/categorias/<categoria>/", methods=["GET"])
+def get_books_by_category(categoria):
+    query = {"categories": {'$regex': categoria, '$options': 'i'}}
+    books_list = handle_pagination(query, request)
+    return parse_json(books_list), 200
+
+
+#FAZER!!!
+#Tirar os parametos das funções abaixo e colocar tudo a keys e fazer o sort diretamente na query
+#Criar a as funções Delete e Post dos books, e a função Confirmation dos users
+
+@app.route("/books/price/<float:min_price>/<float:max_price>", methods=["GET"])
+def get_books_by_price(min_price, max_price):
+    try:
+        order = request.args.get('order', 'asc')
+        sort_order = 1 if order == 'asc' else -1
+
+        query = {
+            "price": {
+                "$gte": min_price,
+                "$lte": max_price
+            }
+        }
+        books_list = handle_pagination(query, request, sort=[("price", sort_order)])
+        return parse_json(books_list), 200
+
+    except ValueError:
+        return jsonify({"error": "Invalid price format"}), 400
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+
+@app.route("/books/score/<float:min_score>/<float:max_score>", methods=["GET"])
+def get_books_by_score(min_score, max_score):
+    try:
+        order = request.args.get('order', 'asc') #podemos tambem meter no link /books/score/<float:min_score>/<float:max_score>/<order> não? - não.
+        sort_order = 1 if order == 'asc' else -1
+
+        query = {
+            "score": {
+                "$gte": min_score,
+                "$lte": max_score
+            }
+        }
+        books_list = handle_pagination(query, request, sort=[("score", sort_order)])
+        return parse_json(books_list), 200
+
+    except ValueError:
+        return jsonify({"error": "Invalid score format"}), 400
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
