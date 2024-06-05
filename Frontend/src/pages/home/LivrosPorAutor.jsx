@@ -9,8 +9,7 @@ function LivrosPorAutor({ autor }) {
     const {data} = useFetch();
     const BOOKS = data.books;
 
-    const livrosDoAutor = BOOKS.filter(item => item.authors.includes(autor)); // Filtra os livros pelo autor especificado
-
+    const livrosDoAutor = BOOKS.filter(item => item.authors && item.authors.includes(autor));
     return (
         <div>
             <div className={"box"} style={{backgroundImage: `url(${bookAutor})`}}>

@@ -236,8 +236,8 @@ def get_books_by_score():
 def manage_book(data, id):
     try:
         current_user = db.user.find_one({"username": data["username"]})
-        if not current_user.get('is_admin'):
-            return jsonify({"error": "Admin access required!"}), 403
+        if not current_user.get('confirmed'):
+            return jsonify({"error": "Conta não foi confirmada"}), 403
 
         if request.method == "PUT":
             request_data = request.json
