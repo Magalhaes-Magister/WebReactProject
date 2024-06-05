@@ -1,5 +1,6 @@
 
-import React, {useContext} from 'react'
+import React, { useContext } from 'react';
+import { ShopContext } from '../../context/shop-context';
 import { useParams } from 'react-router-dom';
 import {useFetch} from "../../useFetch";
 import style from "./individualBook.module.css";
@@ -11,7 +12,7 @@ import star_4 from "../../images/4_stars.png";
 import star_5 from "../../images/5_stars.png";
 import missing from "../../images/missing_img.png";
 import basket from "../../images/basket.png";
-import {ShopContext} from "../../context/shop-context";
+
 
 function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -29,8 +30,16 @@ export const IndividualBook = () => {
     const {data} = useFetch();
     const BOOKS = data.books;
     const {addToCart} = useContext(ShopContext);
-
     const { livroId } = useParams();
+    const {addToCart} = useContext(ShopContext); 
+
+    const book = BOOKS.find((item) => item.id === livroId);
+
+    if (!book) {
+        return <div>Book not found</div>;
+    }
+
+    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn} = book;
     const book = BOOKS.find((item) => { return item.id === livroId});
 
     if (!book) {
@@ -45,7 +54,7 @@ export const IndividualBook = () => {
     let estrelas;
     switch (score){
         case 1:
-            estrelas = star_1;
+            estrelas = star_1
             break;
         case 2:
             estrelas = star_2;

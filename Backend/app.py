@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from functools import wraps
 import jwt
 import json
-import ast
 import math
 
 app = Flask(__name__)
@@ -20,6 +19,7 @@ def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
         token = request.args.get('token')
+
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
 
@@ -28,44 +28,61 @@ def token_required(func):
 
         except jwt.ExpiredSignatureError:
             return jsonify({'expirado': True}), 401
-
+        
         except jwt.InvalidTokenError:
-            return jsonify({'Token Inválido'}), 401
-
-        return func(*args, **kwargs)
+            return jsonify({'message': 'Token Inválido'}), 401
+        
+        return func(data, *args, **kwargs)
+    
     return decorated
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
 
-def handle_pagination(query, request):
+def handle_pagination(query, request, sort_field=None, sort_order=None):
     if request.args.get('page') != None or request.args.get('limit') != None:
+
         page = int(request.args.get('page'))
         limit = int(request.args.get('limit'))
         last = math.ceil(len(list(db.books.find(query)))/limit)
+
         if page <= last:
             skip = (page-1)*limit
-            books = db.books.find(query).skip(skip).limit(limit)
+
+            if sort_field == None:
+                books = db.books.find(query).skip(skip).limit(limit)
+            else:
+                books = db.books.find(query).sort({sort_field: sort_order}).skip(skip).limit(limit)
+
             previous = 0
             next = 0
             previous = page-1 if page > 1 else None
             next = page+1 if page < last else None
             books_pages = {"books": books,"pages": {"current": page, "previous": previous, "next": next, "last": last, "total": len(list(db.books.find(query)))}}
             return books_pages
+        
         else:
             return jsonify({'error: Página não acessível'}),
     else:
-        books = db.books.find(query)
+        if sort_field == None:
+            books = db.books.find(query)
+        else:
+
+            books = db.books.find(query).sort({sort_field: sort_order})
         return {"books": books}
+
+    
 
 @app.route("/books/<id>", methods=["GET"])
 def get_book_id(id):
     try:
         book = db.books.find_one({"_id": ObjectId(id)})
+
         if book:
             return parse_json(book), 200
         else:
             return jsonify({"error": "Livro não encontrado"}), 404
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -78,6 +95,7 @@ def get_books():
 @app.route("/books", methods=["POST"])
 @token_required
 def post_books():
+    print(request.args)
     books = request.json
     if type(books) != list: books = [books]
     db.books.insert_many(books)
@@ -107,6 +125,7 @@ def create_user():
     data = request.json
     if db.user.find_one({"username": data["username"]}) == None:
         data['confirmed'] = False
+        data['is_admin'] = False
         db.user.insert_one(data)
         return "Utilizador adicionado", 200
     else:
@@ -121,9 +140,6 @@ def add_cart():
 
 @app.route('/user/login', methods=['POST'])
 def login():
-    # Fazer Login do user
-    # Check se user é válido e se tem o campo confirmation = True
-    # Apenas gerir Authentication Token se confirmation = True
     dados = request.json
     user = db.user.find_one({"username": dados["username"]})
     if user == None:
@@ -131,7 +147,7 @@ def login():
     elif user['password'] != dados['password']:
         return "Password errada", 409
     elif user['confirmed'] == False:
-        return "Utilizador não tem autorização", 405
+        return "Utilizador não tem autorização", 403
     else:
         token = jwt.encode({
             'username': dados['username'],
@@ -160,15 +176,11 @@ def get_books_by_category(categoria):
     return parse_json(books_list), 200
 
 
-#FAZER!!!
-#Tirar os parametos das funções abaixo e colocar tudo a keys e fazer o sort diretamente na query
-#Criar a as funções Delete e Post dos books, e a função Confirmation dos users
-
-@app.route("/books/price/<float:min_price>/<float:max_price>", methods=["GET"])
-def get_books_by_price(min_price, max_price):
+@app.route("/books/price/", methods=["GET"])
+def get_books_by_price():
     try:
-        order = request.args.get('order', 'asc')
-        sort_order = 1 if order == 'asc' else -1
+        min_price = float(request.args.get('min_price'))
+        max_price = float(request.args.get('max_price'))
 
         query = {
             "price": {
@@ -176,7 +188,7 @@ def get_books_by_price(min_price, max_price):
                 "$lte": max_price
             }
         }
-        books_list = handle_pagination(query, request, sort=[("price", sort_order)])
+        books_list = handle_pagination(query, request, sort_field="price", sort_order=1)
         return parse_json(books_list), 200
 
     except ValueError:
@@ -187,11 +199,11 @@ def get_books_by_price(min_price, max_price):
 
 
 
-@app.route("/books/score/<float:min_score>/<float:max_score>", methods=["GET"])
-def get_books_by_score(min_score, max_score):
+@app.route("/books/score/", methods=["GET"])
+def get_books_by_score():
     try:
-        order = request.args.get('order', 'asc') #podemos tambem meter no link /books/score/<float:min_score>/<float:max_score>/<order> não? - não.
-        sort_order = 1 if order == 'asc' else -1
+        min_score = int(request.args.get('min_score'))
+        max_score = int(request.args.get('max_score'))
 
         query = {
             "score": {
@@ -199,7 +211,7 @@ def get_books_by_score(min_score, max_score):
                 "$lte": max_score
             }
         }
-        books_list = handle_pagination(query, request, sort=[("score", sort_order)])
+        books_list = handle_pagination(query, request, sort_field="score", sort_order=1)
         return parse_json(books_list), 200
 
     except ValueError:
@@ -207,3 +219,78 @@ def get_books_by_score(min_score, max_score):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+
+@app.route("/books/<string:id>", methods=["PUT", "DELETE"])
+@token_required
+def manage_book(data, id):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Admin access required!"}), 403
+
+        if request.method == "PUT":
+            request_data = request.json
+            book = db.books.find_one({"_id": ObjectId(id)})
+            if book:
+                db.books.update_one({"_id": ObjectId(id)}, {"$set": request_data})
+                return jsonify({"message": "Livro atualizado"}), 200
+            else:
+                return jsonify({"error": "Livro não encontrado"}), 404
+
+        elif request.method == "DELETE":
+            book = db.books.find_one({"_id": ObjectId(id)})
+            if book:
+                db.books.delete_one({"_id": ObjectId(id)})
+                return jsonify({"message": "Livro eliminado"}), 200
+            else:
+                return jsonify({"error": "Livro não encontrado"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+    
+@app.route("/user/confirmation", methods=["POST"])
+@token_required
+def confirm_user_registration(data):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user:
+            return jsonify({'message': 'Token inválido!'}), 401
+
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Acesso de admin necessário"}), 403
+
+        request_data = request.json
+        user = db.user.find_one({"username": request_data["username"]})
+        if user:
+            db.user.update_one({"username": request_data["username"]}, {"$set": {"confirmed": True}})
+            return jsonify({"message": "Utilizador confirmado"}), 200
+        else:
+            return jsonify({"error": "Utilizador não encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/admin/designate_admin", methods=["POST"])
+@token_required
+def designate_admin(data):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Acesso de admin necessário"}), 403
+
+        request_data = request.json
+        username = request_data.get('username')
+        if not username:
+            return jsonify({"error": "O nome do utilizador não existe"}), 400
+
+        user = db.user.find_one({"username": username})
+        if not user:
+            return jsonify({"error": "Utilizador não encontrado"}), 404
+
+        db.user.update_one({"username": username}, {"$set": {"is_admin": True}})
+
+        return jsonify({"message": f"{username} foi aceite como administrador"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

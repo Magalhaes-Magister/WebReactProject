@@ -9,8 +9,8 @@ import Card from 'react-bootstrap/Card'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Carrousel() {
-    const {data} = useFetch();
-    const BOOKS = data.books;
+    const {data, error} = useFetch();
+    const BOOKS = data.books
     const books = BOOKS.filter(item => {return(item.score === 5)})
 
     const settings = {
