@@ -29,7 +29,6 @@ function formatDate(date) {
 export const IndividualBook = () => {
     const {data} = useFetch();
     const BOOKS = data.books;
-    const {addToCart} = useContext(ShopContext);
     const { livroId } = useParams();
     const {addToCart} = useContext(ShopContext); 
 
@@ -38,14 +37,6 @@ export const IndividualBook = () => {
     if (!book) {
         return <div>Book not found</div>;
     }
-
-    const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn} = book;
-    const book = BOOKS.find((item) => { return item.id === livroId});
-
-    if (!book) {
-        return <div>Book not found</div>;
-    }
-
 
     const {thumbnailUrl, longDescription, title, authors, publishedDate, pageCount, score, price, isbn} = book;
     let preco = price || "Indisponível";

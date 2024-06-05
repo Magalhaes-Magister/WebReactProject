@@ -88,18 +88,23 @@ def get_book_id(id):
 
 @app.route("/books", methods=["GET"])
 def get_books():
-    query = {}
-    books_list = handle_pagination(query, request)
-    return parse_json(books_list), 200
+    try:
+        query = {}
+        books_list = handle_pagination(query, request)
+        return parse_json(books_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @app.route("/books", methods=["POST"])
 @token_required
 def post_books():
-    print(request.args)
-    books = request.json
-    if type(books) != list: books = [books]
-    db.books.insert_many(books)
-    return 'The book was added', 200
+    try:
+        books = request.json
+        if type(books) != list: books = [books]
+        db.books.insert_many(books)
+        return 'The book was added', 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @app.route("/books/total", methods=["GET"])
 def get_total_books():
@@ -158,10 +163,11 @@ def login():
 
 
 
+
 @app.route("/books/featured/", methods=["GET"])
 def get_featured_books():
     try:
-        top_books_price = db.books.find().sort("price", -1).limit(5)
+        top_books_price = db.books.find().sort([("score", -1), ("price", -1)]).limit(5)
         if top_books_price:
             return parse_json(list(top_books_price)), 200
         else:
@@ -169,11 +175,15 @@ def get_featured_books():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+
 @app.route("/books/categorias/<categoria>/", methods=["GET"])
 def get_books_by_category(categoria):
-    query = {"categories": {'$regex': categoria, '$options': 'i'}}
-    books_list = handle_pagination(query, request)
-    return parse_json(books_list), 200
+    try:
+        query = {"categories": {'$regex': categoria, '$options': 'i'}}
+        books_list = handle_pagination(query, request)
+        return parse_json(books_list), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 
 @app.route("/books/price/", methods=["GET"])
@@ -192,7 +202,7 @@ def get_books_by_price():
         return parse_json(books_list), 200
 
     except ValueError:
-        return jsonify({"error": "Invalid price format"}), 400
+        return jsonify({"error": "Formatação de preço invalida"}), 400
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -215,7 +225,7 @@ def get_books_by_score():
         return parse_json(books_list), 200
 
     except ValueError:
-        return jsonify({"error": "Invalid score format"}), 400
+        return jsonify({"error": "Formatação do score invalida"}), 400
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
