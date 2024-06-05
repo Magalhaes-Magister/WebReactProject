@@ -25,15 +25,13 @@ def token_required(func):
 
         try:
             data = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-
         except jwt.ExpiredSignatureError:
             return jsonify({'expirado': True}), 401
-
         except jwt.InvalidTokenError:
-            return jsonify({'Token Inválido'}), 401
-
-        return func(*args, **kwargs)
+            return jsonify({'message': 'Token Inválido'}), 401
+        return func(data, *args, **kwargs)
     return decorated
+
 
 def parse_json(data):
     return json.loads(json_util.dumps(data))
@@ -78,6 +76,7 @@ def get_books():
 @app.route("/books", methods=["POST"])
 @token_required
 def post_books():
+    print(request.args)
     books = request.json
     if type(books) != list: books = [books]
     db.books.insert_many(books)
@@ -107,6 +106,7 @@ def create_user():
     data = request.json
     if db.user.find_one({"username": data["username"]}) == None:
         data['confirmed'] = False
+        data['is_admin'] = False
         db.user.insert_one(data)
         return "Utilizador adicionado", 200
     else:
@@ -131,7 +131,7 @@ def login():
     elif user['password'] != dados['password']:
         return "Password errada", 409
     elif user['confirmed'] == False:
-        return "Utilizador não tem autorização", 405
+        return "Utilizador não tem autorização", 403
     else:
         token = jwt.encode({
             'username': dados['username'],
@@ -207,3 +207,79 @@ def get_books_by_score(min_score, max_score):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+
+
+
+@app.route("/books/<string:id>", methods=["PUT", "DELETE"])
+@token_required
+def manage_book(data, id):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Admin access required!"}), 403
+
+        if request.method == "PUT":
+            request_data = request.json
+            book = db.books.find_one({"_id": ObjectId(id)})
+            if book:
+                db.books.update_one({"_id": ObjectId(id)}, {"$set": request_data})
+                return jsonify({"message": "Livro atualizado"}), 200
+            else:
+                return jsonify({"error": "Livro não encontrado"}), 404
+
+        elif request.method == "DELETE":
+            book = db.books.find_one({"_id": ObjectId(id)})
+            if book:
+                db.books.delete_one({"_id": ObjectId(id)})
+                return jsonify({"message": "Livro eliminado"}), 200
+            else:
+                return jsonify({"error": "Livro não encontrado"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@app.route("/user/confirmation", methods=["POST"])
+@token_required
+def confirm_user_registration(data):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user:
+            return jsonify({'message': 'Token inválido!'}), 401
+
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Acesso de admin necessário"}), 403
+
+        request_data = request.json
+        user = db.user.find_one({"username": request_data["username"]})
+        if user:
+            db.user.update_one({"username": request_data["username"]}, {"$set": {"confirmed": True}})
+            return jsonify({"message": "Utilizador confirmado"}), 200
+        else:
+            return jsonify({"error": "Utilizador não encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/admin/designate_admin", methods=["POST"])
+@token_required
+def designate_admin(data):
+    try:
+        current_user = db.user.find_one({"username": data["username"]})
+        if not current_user.get('is_admin'):
+            return jsonify({"error": "Acesso de admin necessário"}), 403
+
+        request_data = request.json
+        username = request_data.get('username')
+        if not username:
+            return jsonify({"error": "O nome do utilizador não existe"}), 400
+
+        user = db.user.find_one({"username": username})
+        if not user:
+            return jsonify({"error": "Utilizador não encontrado"}), 404
+
+        db.user.update_one({"username": username}, {"$set": {"is_admin": True}})
+
+        return jsonify({"message": f"{username} foi aceite como administrador"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
